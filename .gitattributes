@@ -1,0 +1,10 @@
+# Normalise line endings in the repo so a clone on macOS or Linux does not
+# arrive with CRLF. The hooks are Node scripts and the .tex files are read by
+# LaTeX; both are happier with LF.
+* text=auto eol=lf
+
+# Binary, never touched
+*.pdf binary
+*.png binary
+*.jpg binary
+*.docx binary
