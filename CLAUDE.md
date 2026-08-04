@@ -31,9 +31,15 @@ this repo is still a blank template and nothing in it describes the person you a
 working for. In that case:
 
 1. Say so plainly, in one or two sentences. Do not start on whatever they asked for.
-2. Run the `setup` skill. It is an interview; it fills `profile.md`, `MASTER_CV.md`,
-   `answer-bank.md` and `criteria.md`, and it explains the repo as it goes.
+2. Run the `setup` skill. Its first stage is a **preflight** that detects their OS,
+   shell and installed tooling, so every instruction afterwards is correct for the
+   machine they are on rather than generic. It then creates their private repo and
+   interviews them, filling `profile.md`, `MASTER_CV.md`, `answer-bank.md` and
+   `criteria.md`, and explaining the repo as it goes.
 3. Only once `profile.md` says `STATUS: READY` do the other skills become usable.
+
+`START-HERE.md` is the human-facing version of the same thing, for someone who opens
+the folder before opening Claude.
 
 If the user insists on skipping setup, do the smallest possible version: get their
 name, their target roles, and their CV into `MASTER_CV.md`. Without those three,

@@ -1,17 +1,37 @@
 #!/usr/bin/env node
-// PreToolUse hook (Bash|PowerShell): keeps this repo private and its history intact.
+// PreToolUse hook (Bash|PowerShell): keeps a configured repo private and its
+// history intact.
 //
 // CLAUDE.md guardrail 7. Once setup has run, this repo holds a full CV, contact
-// details, salary expectations and possibly immigration status. Ordinary commits
-// and pushes to the configured origin are fine and encouraged. Everything that
-// could make the repo public, point it somewhere else, or destroy history is
-// blocked: those are the user's own deliberate commands to run, not the
-// assistant's.
+// details, salary expectations and possibly immigration status.
 //
-// The approved remote is read from `git config` at runtime rather than hardcoded,
-// so this works in anyone's fork with no editing.
+// What this deliberately does NOT block:
+//
+//   - `gh repo create`. Setup needs it, and blocking it made the one moment that
+//     should be frictionless into a wall. Creating a repo is not the dangerous
+//     act; publishing personal data is, and that is checked separately below.
+//   - Anything at all while no origin is configured. A fresh clone of the public
+//     template has no personal data in it yet and no established remote to
+//     protect, so there is nothing to guard and every check would be pure
+//     friction.
+//   - Ordinary commits and pushes to the configured origin. Those are encouraged.
+//
+// What it does block, and why each one earns its place:
+//
+//   - Visibility changes and repo deletion on an established repo.
+//   - Force-pushes, destructive refspecs and history rewrites.
+//   - Pushes or remotes naming a URL that is not the configured origin.
+//   - Publishing content sideways through gists and releases.
+//
+// And one thing it merely ASKS about, rather than blocking: creating a PUBLIC
+// repo from a working copy whose profile.md says setup has completed. That is
+// the single combination that publishes somebody's CV, and one confirmation
+// click is a fair price for it. Delete the publicCreate block below if you want
+// even that gone.
 
 import { execSync } from "node:child_process";
+import { readFileSync, existsSync } from "node:fs";
+import { join } from "node:path";
 
 let payload = "";
 for await (const chunk of process.stdin) payload += chunk;
@@ -26,6 +46,8 @@ try {
 const cmd = input?.tool_input?.command;
 if (typeof cmd !== "string" || !cmd.trim()) process.exit(0);
 
+const root = process.env.CLAUDE_PROJECT_DIR || process.cwd();
+
 function deny(reason) {
   process.stderr.write(
     `BLOCKED (CLAUDE.md guardrail 7: this repo is private and stays private): ${reason}\n` +
@@ -34,10 +56,62 @@ function deny(reason) {
   process.exit(2);
 }
 
+function ask(reason) {
+  process.stdout.write(
+    JSON.stringify({
+      hookSpecificOutput: {
+        hookEventName: "PreToolUse",
+        permissionDecision: "ask",
+        permissionDecisionReason: reason,
+      },
+    })
+  );
+  process.exit(0);
+}
+
+function isSetUp() {
+  const p = join(root, "profile.md");
+  if (!existsSync(p)) return false;
+  try {
+    return /^STATUS:\s*READY/i.test(readFileSync(p, "utf8").split(/\r?\n/, 1)[0]);
+  } catch {
+    return false;
+  }
+}
+
+function configuredOrigin() {
+  try {
+    return execSync("git config --get remote.origin.url", {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+      cwd: root,
+    }).trim();
+  } catch {
+    return "";
+  }
+}
+
+// ---------------------------------------------------------------------------
+// The one ask: creating a PUBLIC repo out of a working copy that holds a real CV.
+// ---------------------------------------------------------------------------
+if (/gh\s+repo\s+create\b/.test(cmd) && /(^|\s)--public(\s|$)/.test(cmd) && isSetUp()) {
+  ask(
+    "This creates a PUBLIC repository, and profile.md says setup has completed, " +
+      "so this working copy holds your CV, contact details, salary expectations " +
+      "and possibly your work-authorisation status. Publishing it makes all of " +
+      "that permanently public and search-indexed. If you meant to share the " +
+      "blank template rather than your own hunt, cancel and do it from a fresh " +
+      "clone. Approve only if you are certain."
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Destructive or publishing actions, always blocked on an established repo.
+// ---------------------------------------------------------------------------
 const blocked = [
   {
-    re: /gh\s+repo\s+(create|edit|delete|fork|archive|unarchive|rename|transfer)/,
-    why: "this changes a repository's existence or visibility",
+    re: /gh\s+repo\s+(edit|delete|archive|unarchive|transfer)/,
+    why: "this changes an existing repository's visibility, ownership or existence",
   },
   {
     re: /gh\s+api\b[^\n]*(-X|--method)\s*(PATCH|DELETE|POST|PUT)/i,
@@ -45,7 +119,7 @@ const blocked = [
   },
   {
     re: /gh\s+(gist|release)\s+create/,
-    why: "this publishes repository content",
+    why: "this publishes repository content sideways",
   },
   {
     re: /git\s+push\b[^\n]*(--force\b|--force-with-lease\b|(^|\s)-f(\s|$))/,
@@ -63,30 +137,17 @@ for (const b of blocked) {
   if (m) deny(`matched '${m[0].trim()}', and ${b.why}`);
 }
 
-// Anything that changes or names a remote must name the origin already configured.
+// ---------------------------------------------------------------------------
+// Remote targeting. Only meaningful once an origin exists: before that, setup is
+// still choosing one and there is nothing yet to protect.
+// ---------------------------------------------------------------------------
 const touchesRemote =
   /git\s+remote\s+(add|set-url)/.test(cmd) ||
   (/git\s+push\b/.test(cmd) && /https?:\/\/|git@/.test(cmd));
 
 if (touchesRemote) {
-  let origin = "";
-  try {
-    origin = execSync("git config --get remote.origin.url", {
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "ignore"],
-      cwd: process.env.CLAUDE_PROJECT_DIR || process.cwd(),
-    }).trim();
-  } catch {
-    origin = "";
-  }
-
-  if (!origin) {
-    deny(
-      "this repo has no origin configured yet, so there is no approved remote to " +
-        "check against. Set your own private origin first (the setup skill walks " +
-        "through it)"
-    );
-  }
+  const origin = configuredOrigin();
+  if (!origin) process.exit(0); // no origin yet: this IS the setup step
 
   // Compare on host + path, ignoring protocol, user and a trailing .git.
   const normalise = (u) =>
@@ -100,9 +161,17 @@ if (touchesRemote) {
       .toLowerCase();
 
   const approved = normalise(origin);
-  const named = (cmd.match(/(?:https?:\/\/|git@)[^\s'"]+/g) || []).map(normalise);
 
-  const foreign = named.filter((u) => u !== approved);
+  // The public template is never an origin worth protecting: a working copy still
+  // pointing at it has not been made anyone's own yet, and retargeting away from it
+  // is always the right direction. Without this, the setup fallback
+  // (`git remote add origin <their url>`) gets blocked for doing exactly the thing
+  // setup exists to do.
+  if (approved === "github.com/usamarq/wayfinder-forge") process.exit(0);
+  const foreign = (cmd.match(/(?:https?:\/\/|git@)[^\s'"]+/g) || [])
+    .map(normalise)
+    .filter((u) => u !== approved);
+
   if (foreign.length) {
     deny(
       `it names the remote '${foreign[0]}', which is not this repo's origin ` +

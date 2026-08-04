@@ -49,9 +49,14 @@ if (/^STATUS:\s*NOT SET UP/i.test(firstLine)) {
       "user in any file. Every skill here would produce fiction.",
       "",
       "Before working on whatever the user asks for, tell them this in one or two",
-      "sentences and run the `setup` skill. It is an interview and it explains the",
-      "repo as it goes. If they would rather skip it, get the minimum first: their",
-      "name, their target roles, and their CV into MASTER_CV.md.",
+      "sentences and run the `setup` skill. Its first stage is a preflight that",
+      "detects their OS and tooling, so everything afterwards is written for the",
+      "machine they are actually on; then it interviews them and explains the repo",
+      "as it goes. START-HERE.md is the human-facing version of the same thing.",
+      "",
+      "If they would rather skip the interview, get the minimum first: their name,",
+      "their target roles, and their CV into MASTER_CV.md. Without those three,",
+      "every skill here produces fiction.",
     ].join("\n")
   );
 }

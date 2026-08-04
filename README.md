@@ -28,46 +28,41 @@ you: "apply-assist acme"
 
 ---
 
-## Getting started (about 30 minutes, most of it you talking)
+## Getting started
 
-**1. Make your own private copy.** This repo will end up holding your full CV, your
-contact details, your salary expectations and possibly your visa status. That
-belongs in a private repo, not a fork of a public one.
+**1. Get a copy.** Click **"Use this template"** on GitHub, set the new repo to
+**Private**, and clone it. (Cloning this repo directly also works; setup will make
+you a private repo of your own in its first minute.)
 
-Use the green **"Use this template"** button on GitHub and set the new repo to
-**Private**, then:
+**2. Install Claude Code** if you have not: `npm install -g @anthropic-ai/claude-code`
 
-```bash
-git clone https://github.com/<you>/<your-private-repo>.git
-cd <your-private-repo>
-```
-
-Or, if you cloned this repo directly, detach it before you put anything personal in:
+**3. Run `claude` in the folder and say anything.** That is the whole instruction.
 
 ```bash
-git remote remove origin
-gh repo create my-job-hunt --private --source . --remote origin
-```
-
-**2. Install Claude Code** if you have not already: `npm install -g @anthropic-ai/claude-code`
-
-**3. Open Claude Code in the repo root and say anything.**
-
-```bash
-cd <your-private-repo>
+cd <your-copy>
 claude
 ```
 
-Claude reads `CLAUDE.md`, sees that `profile.md` still says `STATUS: NOT SET UP`,
-and starts the setup interview itself. You do not need to know any commands. It
-asks who you are, what you are looking for, where you can legally work, what you
-will not compromise on, and then it asks for your CV and turns it into
-`MASTER_CV.md`, the file every later claim is checked against.
+Claude reads `CLAUDE.md`, sees that `profile.md` still says `STATUS: NOT SET UP`, and
+takes it from there. You do not need to know any commands, install anything else
+first, or read another file. `/setup` starts it explicitly if you would rather.
 
-You can also start it explicitly with `/setup`.
+**What happens then**, in order:
 
-**4. Optional but recommended:** install a LaTeX distribution so CVs compile to PDF.
-See `docs/latex-setup.md`. Setup will check for one and tell you what is missing.
+- **Preflight.** It works out what OS and shell you are on and what you already have
+  (Node, git, GitHub CLI, LaTeX, browser automation, a mail connector), tells you what
+  each absence actually costs, and hands you install commands **for your platform**.
+  Everything afterwards is written for your machine rather than translated by you.
+- **Your private repo**, created and wired up in one step, so your CV never sits in a
+  fork of a public template.
+- **The interview.** About 30 minutes, most of it you talking. Who you are, where you
+  can legally work, what you are looking for, what you will not compromise on. Then
+  your CV, in whatever form you have it, becomes `MASTER_CV.md`. It saves after every
+  stage, so you can stop halfway and resume tomorrow without repeating yourself.
+- **One real sweep**, so you finish with actual scored leads instead of a summary.
+
+See `START-HERE.md` for the same thing written for a human who opened the folder
+before opening Claude.
 
 ---
 
@@ -147,11 +142,15 @@ docs/                   the daily loop, LaTeX setup, customising
 
 Four Node scripts in `.claude/hooks/`, wired up in `.claude/settings.json`:
 
-- **setup gate**: injects a reminder at session start until `profile.md` is filled in.
+- **setup gate**: injects a reminder at session start until `profile.md` is filled in,
+  then goes quiet and surfaces only funding deadlines inside three weeks.
 - **MASTER_CV review gate**: any edit to `MASTER_CV.md` prompts you to approve the diff.
-- **repo guard**: blocks `gh repo create/edit`, force-pushes, history rewrites, and
-  pushes to any remote other than the one you configured. Your CV does not get
-  published by accident.
+- **repo guard**: blocks visibility changes on an existing repo, force-pushes, history
+  rewrites, and pushes to any remote other than the one you configured. It stays out
+  of the way otherwise: creating repos is allowed, and nothing is checked at all until
+  an origin exists, because a fresh clone has nothing to protect yet. The one thing it
+  pauses for is creating a **public** repo from a working copy that already holds your
+  CV.
 - **em-dash gate**: rejects em dashes in outward documents. The em dash is the
   loudest tell that a letter was machine-written.
 
