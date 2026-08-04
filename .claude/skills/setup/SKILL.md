@@ -259,16 +259,35 @@ requirements, mobility rules, citizenship gates, language), and the five-part ru
 
 ## Stage 8: boards and portals for their country
 
-Open `.claude/skills/discover/boards.md`. It ships with the global boards and an
-empty national section.
+`.claude/skills/discover/boards.md` ships carrying **only LinkedIn**, deliberately.
+Which boards matter depends entirely on their country, field and language, and a
+shipped list for the wrong market looks like knowledge while sending sweeps somewhere
+pointless.
 
-Ask which boards they already use and where jobs in their field actually get posted.
-Add a row per board with what you know and mark the rest unverified. Do **not**
-research or fabricate URL recipes now: the honest state is "unverified until the
-first sweep", and the first `discover` run fills them in.
+So research it now, for them. Ask two questions first, because their answers save you
+a lot of searching:
 
-If they are on the academic track, do the same with
-`.claude/skills/discover-academic/portals.md`.
+1. Which boards do they already use, and which one has actually produced an interview?
+2. Do they know where companies in their field advertise, or has it all been LinkedIn?
+
+Then **follow `.claude/skills/discover/board-research.md`** and do the real pass:
+look at where ads in their field actually land by opening a handful of real companies'
+careers pages, search in the local language as well as English, check the national
+public employment service, and vet each candidate on the live site (alive, real volume
+for their actual queries, not just a LinkedIn mirror, recency filter, reads cleanly).
+Four to six boards, ordered by value, each with a verified date.
+
+**Never write a URL recipe you have not seen work.** An empty recipe cell marked
+`unverified` is an honest row; a guessed one is a sweep that quietly returns the wrong
+thing for months.
+
+Report what you found in a few lines, including what you rejected. If it turns out
+companies in their field mostly do not post to boards at all, **lead with that**: it
+moves the strategy from sweeping to outreach, and it is worth more than the list.
+
+If they are on the academic track, do the same for
+`.claude/skills/discover-academic/portals.md`, which ships the same way: EURAXESS as
+the one anchor, everything else researched for their country.
 
 > One sentence: this file is the memory of what each board does and where its search
 > URLs live, so the second sweep is one navigation instead of ten clicks.

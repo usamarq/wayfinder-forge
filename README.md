@@ -165,10 +165,14 @@ you are and writes the answers into `criteria.md` and
 `.claude/skills/discover/boards.md`. What is worth filling in yourself over the
 first week:
 
-- **Boards.** `boards.md` ships with the global ones (LinkedIn, Indeed, Wellfound,
-  Otta, Welcome to the Jungle, RemoteOK) and a blank section for your national
-  boards. Record the URL recipe for each search the first time you drive its UI, so
-  later sweeps are one navigation instead of ten clicks.
+- **Boards.** `boards.md` ships carrying **only LinkedIn**, on purpose. Which boards
+  matter depends entirely on your country, field and language, and a canned list for
+  the wrong market looks like knowledge while sending sweeps somewhere pointless.
+  Setup researches the real ones for you instead: it opens a handful of actual
+  companies' careers pages in your field to see where their ads land, searches in your
+  local language as well as English, checks your national employment service, and vets
+  each candidate live before recording it. You end up with four to six boards that
+  matter, each with a URL recipe that has been seen to work.
 - **Language bar.** In many markets an English-looking careers page hides a
   local-language requirement on the apply portal. `boards.md` has a section on this;
   the rule is to follow the Apply control through and read the requirement where the

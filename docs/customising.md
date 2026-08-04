@@ -30,11 +30,21 @@ a title you had not thought of.
 
 ### The boards in `.claude/skills/discover/boards.md`
 
-The shipped file has the global boards and an empty national section. The national
-boards are where the volume actually is in most markets.
+Ships with LinkedIn and nothing else. Setup researches the rest for your market using
+`board-research.md`, and `discover` researches any board you name that has no entry
+yet.
 
-Record a URL recipe the first time you drive a board's UI. Every recipe recorded is
-twenty clicks you never make again.
+Two things worth doing yourself as you go:
+
+- **Re-prioritise.** The rows carry a priority so a short run can take just the top
+  two. After a month you will know better than the research pass did which board
+  actually produces interviews. Move it to 1.
+- **Record a recipe the first time you drive a board's UI.** Every recipe recorded is
+  twenty clicks you never make again. Never write one you have not seen work: an empty
+  cell marked `unverified` is honest, a guessed one silently returns the wrong thing.
+
+Boards decay. When one returns nothing new for three sweeps in a row, re-run the
+research pass rather than assuming your market went quiet.
 
 ### Your voice
 

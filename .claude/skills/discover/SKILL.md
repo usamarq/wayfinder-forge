@@ -1,6 +1,6 @@
 ---
 name: discover
-description: Sweep a job board in the user's own logged-in browser using the search queries defined in criteria.md, score every result against the criteria.md rubric, and append qualifying leads to leads.md. Use when the user names a board to scan ("discover linkedin", "sweep indeed", "anything new on wellfound"); they should not have to type roles or search terms.
+description: Sweep a job board in the user's own logged-in browser using the search queries defined in criteria.md, score every result against the criteria.md rubric, and append qualifying leads to leads.md. Researches and records a board it has not seen before. Use when the user names a board to scan or just asks for a sweep ("discover linkedin", "sweep the boards", "anything new this week"); they should not have to type roles or search terms.
 ---
 
 # Discover: read the open board page, score, save leads
@@ -41,6 +41,16 @@ messages anyone, never logs in.
 
 ## Steps
 
+0. **If the board they named has no entry in `boards.md`, research it first.** Follow
+   `board-research.md` next to this file: vet it (alive, real volume for their actual
+   queries, not just a LinkedIn mirror, recency filter, reads cleanly), capture the
+   URL recipe by driving the UI once, and write the row. Then sweep.
+
+   **If `boards.md` has nothing but LinkedIn and they did not name a board**, that is
+   a fresh install: run the full `board-research.md` pass for their market before
+   sweeping anything, and tell them what you found. Do not silently default to
+   LinkedIn only; it is the fallback, not the plan.
+
 1. Read `criteria.md` (tiers, deal-breakers, rubric, queries), `leads.md`, and
    `tracker.md`. Read `profile.md` for location, language and authorisation
    constraints.
@@ -79,7 +89,17 @@ Tailoring is a separate step the user asks for.
 
 ## Board reality
 
-See `boards.md` next to this file: which boards read cleanly, which fight, which are
-gone, the URL recipe for each search, and where assisted form-filling breaks later.
-**Update it whenever reality changes.** That file is the difference between the tenth
-sweep taking two minutes and taking twenty.
+Two files next to this one:
+
+- **`boards.md`**: which boards read cleanly, which fight, which are gone, the URL
+  recipe for each search, and where assisted form-filling breaks later. It ships
+  carrying **only LinkedIn**, because which boards matter depends entirely on the
+  user's country, field and language, and a shipped list for the wrong country looks
+  like knowledge while sending sweeps somewhere pointless.
+- **`board-research.md`**: how the rest of that file gets written, from live pages,
+  for this user's actual market.
+
+**Update `boards.md` whenever reality changes.** It is the difference between the
+tenth sweep taking two minutes and taking twenty. Never write a URL recipe you have
+not seen work: an empty cell marked `unverified` is an honest row, a guessed recipe
+is a sweep that quietly returns the wrong thing.

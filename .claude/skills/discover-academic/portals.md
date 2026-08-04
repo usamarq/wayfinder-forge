@@ -31,7 +31,9 @@ positions in Europe, including MSCA-funded posts.
 - Career-stage vocabulary: R1 is a doctoral candidate, R2 is a recognised
   researcher (post-PhD), R3 established, R4 leading. Filtering to R1 removes most of
   the noise for a doctoral search.
-- Cross-posts heavily with national portals and with academicpositions.com. Dedupe.
+- Cross-posts heavily with national portals and with the regional academic
+  aggregators. Dedupe on URL and on organisation plus title; the same position
+  routinely appears three times under slightly different wording.
 
 Recorded facet URLs:
 
@@ -39,17 +41,33 @@ Recorded facet URLs:
 |---|---|---|
 | {{e.g. doctoral positions, computer science, <country>}} | {{url}} | {{YYYY-MM-DD}} |
 
-### Other aggregators worth a sweep
+### The other aggregators: researched, not shipped
 
-- **academicpositions.com**: clean, wide European coverage, heavy overlap with
-  EURAXESS.
-- **jobs.ac.uk**: the UK's dominant academic board; also carries European posts.
-- **FindAPhD / FindAPostdoc**: strong for funded UK and Irish positions. Often
-  browser-only.
-- **Nature Careers**, **Times Higher Education Unijobs**: broad, slower-moving.
-- **MSCA doctoral networks**: check the current call's funded-project list on the
-  Commission's portal, then apply to the individual host institutions. These do not
-  reliably appear on job boards at all.
+**This file ships with EURAXESS and nothing else**, for the same reason `boards.md`
+ships with only LinkedIn: which academic sources matter depends on the country, the
+discipline and the language, and every big academic aggregator beyond EURAXESS is
+regional. One that dominates in one country is irrelevant two borders away.
+
+Research them for this user with `../discover/board-research.md`, adapted:
+
+- The ground-truth method transfers exactly. Instead of companies' careers pages, open
+  the **recruitment pages of five or six universities** in the user's target country
+  and see which system each uses and where each syndicates. That tells you the real
+  answer in twenty minutes, and no listicle would have.
+- Search in the local language for the local words for "doctoral researcher",
+  "vacancies" and "open positions". National academic boards rank for those, not for
+  English.
+- Check the national research council and the national public employment service:
+  state research institutes often advertise only there.
+- Check discipline-specific boards, which in some fields carry more than any general
+  academic aggregator.
+- **MSCA doctoral networks** deserve their own check, in any market: look at the
+  current call's funded-project list on the Commission's portal, then apply to the
+  individual host institutions. These do not reliably appear on job boards at all, so
+  a sweep that only reads boards misses them entirely.
+
+Record survivors in the table below with a verified date. Never write a facet URL you
+have not seen return results.
 
 **The MSCA mobility rule catches people constantly.** Marie Skłodowska-Curie
 positions generally require that the researcher has not resided or carried out their
