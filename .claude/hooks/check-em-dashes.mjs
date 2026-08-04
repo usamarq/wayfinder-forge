@@ -19,7 +19,7 @@
 // to the assistant, which then fixes them immediately.
 
 import { readFileSync, existsSync } from "node:fs";
-import { join, basename } from "node:path";
+import { join } from "node:path";
 
 const EM_DASH = "—";
 const root = process.env.CLAUDE_PROJECT_DIR || process.cwd();
@@ -48,10 +48,17 @@ if (existsSync(profilePath)) {
   }
 }
 
+// Normalise to one separator so the folder and filename tests below work the same
+// on every platform.
 const norm = path.replace(/\//g, "\\");
 if (!/\\(base-cv|applications|templates|sketches)\\/.test(norm)) process.exit(0);
 
-const name = basename(norm);
+// Split on the normalised separator rather than using path.basename: on macOS and
+// Linux, basename only splits on "/", so it would hand back the entire
+// backslash-joined path and every filename test below would silently fail. That
+// would have disabled this gate for outward .md files on exactly the platforms
+// most likely to be running it.
+const name = norm.split("\\").pop();
 const isTex = /\.tex$/.test(name);
 const isSketch = /\\sketches\\[^\\]+\.md$/.test(norm);
 const isOutward =
