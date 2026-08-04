@@ -1,0 +1,89 @@
+% =====================================================================
+%  base-cv/cv-ats.tex : the ATS-friendly master CV
+%
+%  Identical CONTENT to cv.tex, styled for a parser rather than a person:
+%  single column, no icons, no colour, linear reading order, a font every
+%  extractor handles.
+%
+%  Build from inside this folder:
+%      pdflatex cv-ats.tex
+%
+%  Why both: applicant tracking systems parse two-column layouts, icons
+%  and ligature-heavy display fonts badly, and a CV that parses into the
+%  wrong fields is a CV nobody reads. Attach this one to parsing portals
+%  and cv.pdf wherever a human opens the file.
+%
+%  Content rules (CLAUDE.md): every claim traces to MASTER_CV.md, every
+%  number verbatim, no em dashes, date ranges use "--".
+% =====================================================================
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1.8cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\emergencystretch}{2em}
+\setlist[itemize]{leftmargin=1.4em,itemsep=1pt,topsep=2pt,parsep=0pt,label=\textbullet}
+\titleformat{\section}{\large\bfseries}{}{0pt}{\MakeUppercase}[\titlerule]
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+
+% \entry{Title}{Organisation}{Date}
+\newcommand{\entry}[3]{\textbf{#1}, #2\\#3\par\vspace{1pt}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\textbf{{{YOUR NAME}}}}\\[2pt]
+  {{HEADLINE}}\\[3pt]
+  {{CITY, COUNTRY}} \textbar{} {{PHONE}} \textbar{} \href{mailto:{{EMAIL}}}{{{EMAIL}}}\\
+  LinkedIn: \href{{{LINKEDIN URL}}}{{{linkedin display}}} \textbar{} GitHub: \href{{{GITHUB URL}}}{{{github display}}}
+\end{center}
+
+\raggedright
+
+\section{Summary}
+{{same content as cv.tex}}
+
+\section{Skills}
+\textbf{{{GROUP 1}}:} {{skills}}.\\
+\textbf{{{GROUP 2}}:} {{skills}}.\\
+\textbf{{{GROUP 3}}:} {{skills}}.
+
+\section{Education}
+\entry{{{DEGREE}}}{{{INSTITUTION, specialisation}}}{{{DATES}}}
+\begin{itemize}
+  \item {{Grade with the scale; thesis title and assessment.}}
+\end{itemize}
+\entry{{{EARLIER DEGREE}}}{{{INSTITUTION}}}{{{DATES}}}
+
+\section{Professional Experience}
+
+\entry{{{TITLE}}}{{{ORGANISATION, location}}}{{{DATES}}}
+\begin{itemize}
+  \item {{What you built or ran, and what it measured.}}
+\end{itemize}
+
+% ...repeat per role...
+
+\section{Selected Projects}
+
+\entry{{{PROJECT}}}{{{CONTEXT}}}{{{DATES}}}
+\begin{itemize}
+  \item {{One concrete bullet.}}
+\end{itemize}
+
+\section{Publications}
+{{Authors. "Title". Venue, year. URL}}
+
+\section{Languages}
+\textbf{{{LANGUAGE}}:} {{level and scale}}\\
+\textbf{{{LANGUAGE}}:} {{level and scale}}
+
+\end{document}

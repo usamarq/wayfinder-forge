@@ -1,0 +1,102 @@
+% =====================================================================
+%  templates/tailored-cv-ats.tex : ATS-friendly tailored-CV skeleton
+%  Single column, no icons, no colour, linear reading order.
+%
+%  Usage (tailor skill):
+%    1. Copy to applications/<company>-<role>/cv-<slug>-ats.tex
+%    2. Replace every {{...}} placeholder. Same content rules as the
+%       designed version (MASTER_CV.md only, numbers verbatim, no em
+%       dashes). This is the version applicant tracking software parses:
+%       mirror the posting's exact keyword spellings here, but ONLY where
+%       the evidence exists in MASTER_CV.md. Mirroring a keyword the CV
+%       cannot support is the polite name for lying.
+%    3. Build with pdfLaTeX:  pdflatex cv-<slug>-ats.tex
+%
+%  Why a second file at all: parsers handle two-column layouts, icons and
+%  ligature-heavy display fonts badly, and a CV that parses into the wrong
+%  fields is a CV nobody reads. Attach this one to parsing portals and the
+%  designed one wherever a human opens the file.
+%
+%  This file is a skeleton; it is not meant to compile until the
+%  placeholders are replaced.
+% =====================================================================
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1.8cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\emergencystretch}{2em}
+
+\setlist[itemize]{leftmargin=1.4em,itemsep=1pt,topsep=2pt,parsep=0pt,label=\textbullet}
+\titleformat{\section}{\large\bfseries}{}{0pt}{\MakeUppercase}[\titlerule]
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+
+% \entry{Title}{Organisation}{Date}
+\newcommand{\entry}[3]{\textbf{#1}, #2\\#3\par\vspace{1pt}}
+
+\begin{document}
+
+% ---- Header: plain text, no icons ------------------------------------
+\begin{center}
+  {\LARGE\textbf{{{YOUR NAME}}}}\\[2pt]
+  {{HEADLINE: same as the designed version}}\\[3pt]
+  {{CITY, COUNTRY}} \textbar{} {{PHONE}} \textbar{} \href{mailto:{{EMAIL}}}{{{EMAIL}}}\\
+  LinkedIn: \href{{{LINKEDIN URL}}}{{{linkedin display}}} \textbar{} GitHub: \href{{{GITHUB URL}}}{{{github display}}}
+\end{center}
+
+\raggedright
+
+% ---- Summary ---------------------------------------------------------
+\section{Summary}
+{{SUMMARY: same content as the designed version}}
+
+% ---- Skills ----------------------------------------------------------
+\section{Skills}
+\textbf{{{GROUP 1}}:} {{skills}}.\\
+\textbf{{{GROUP 2}}:} {{skills}}.\\
+\textbf{{{GROUP 3}}:} {{skills}}.
+
+% ---- Education -------------------------------------------------------
+\section{Education}
+\entry{{{DEGREE 1}}}{{{INSTITUTION, specialisation}}}{{{DATES}}}
+\entry{{{DEGREE 2}}}{{{INSTITUTION}}}{{{DATES}}}
+
+% ---- Experience ------------------------------------------------------
+\section{Professional Experience}
+
+\entry{{{TITLE}}}{{{ORGANISATION}}}{{{DATES}}}
+\begin{itemize}
+  \item {{Evidence-first bullet: what was built and what it measured.}}
+\end{itemize}
+
+% ...repeat \entry blocks for each role kept...
+
+% ---- Selected Projects ----------------------------------------------
+\section{Selected Projects}
+
+\entry{{{PROJECT}}}{{{CONTEXT}}}{{{DATES}}}
+\begin{itemize}
+  \item {{One concrete bullet; numbers verbatim from MASTER_CV.md.}}
+\end{itemize}
+
+% ...repeat per project kept...
+
+% ---- Publications (delete if there are none) -------------------------
+\section{Publications}
+{{Authors. "Title". Venue, year. URL}}
+
+% ---- Languages -------------------------------------------------------
+\section{Languages}
+\textbf{{{LANGUAGE}}:} {{level and scale}}\\
+\textbf{{{LANGUAGE}}:} {{level and scale}}
+
+\end{document}

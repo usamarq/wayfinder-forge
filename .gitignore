@@ -1,0 +1,47 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Browser automation session artifacts (console logs, page snapshots)
+.playwright-mcp/
+
+# Local Claude Code settings (machine-specific permissions, not shared)
+.claude/settings.local.json
+
+# ---------------------------------------------------------------------------
+# Your working copy of this repo SHOULD be private, and then everything below
+# is worth committing: the tracker and the leads are the point.
+#
+# If for any reason you are working in a repo that is NOT private, uncomment
+# these lines before your first commit. Losing the history is much cheaper than
+# publishing your CV, your salary floor and your immigration status.
+# ---------------------------------------------------------------------------
+# profile.md
+# MASTER_CV.md
+# answer-bank.md
+# tracker.md
+# tracker-academic.md
+# leads.md
+# leads-academic.md
+# linkedin-outreach.md
+# applications/
+# base-cv/

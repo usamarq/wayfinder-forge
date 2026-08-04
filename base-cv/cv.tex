@@ -1,0 +1,79 @@
+% =====================================================================
+%  base-cv/cv.tex : the DESIGNED master CV
+%
+%  This is the complete record, styled for a human reader. Tailored CVs in
+%  applications/ are selections FROM this and from MASTER_CV.md; this file
+%  is the one you send when someone asks for "your CV" with no posting
+%  attached, and it is the attachment for open applications.
+%
+%  Build from inside this folder (cvstyle.sty resolves from here):
+%      xelatex cv.tex
+%  Run it twice if you add anything that needs a second pass.
+%
+%  Content rules (CLAUDE.md): every claim traces to MASTER_CV.md, every
+%  number verbatim, no em dashes anywhere, date ranges use "--".
+%  Escape LaTeX specials: \& \% \#
+% =====================================================================
+\documentclass[11pt]{article}
+\usepackage[a4paper,top=1.4cm,bottom=1.3cm,left=1.7cm,right=1.7cm,footskip=0.5cm]{geometry}
+\usepackage{cvstyle}
+
+\begin{document}
+
+\cvname{{{YOUR NAME}}}{{{HEADLINE: the one-line role description you would defend}}}
+
+\begin{center}\small
+  \cvcontact{\faEnvelope}{\href{mailto:{{EMAIL}}}{{{EMAIL}}}}\cvdot
+  \cvcontact{\faPhone}{{{PHONE}}}\cvdot
+  \cvcontact{\faMapMarker}{{{CITY, COUNTRY}}}\\[3pt]
+  \cvcontact{\faLinkedin}{\href{{{LINKEDIN URL}}}{{{linkedin display}}}}\cvdot
+  \cvcontact{\faGithub}{\href{{{GITHUB URL}}}{{{github display}}}}
+\end{center}
+\vspace{3pt}
+
+\cvsection{\faUser}{Summary}
+{{3 to 4 sentences. What you build, what you have measured, what you are for.
+  Plain and specific. No superlatives.}}
+
+\cvsection{\faCogs}{Skills}
+\textbf{{{GROUP 1}}:} {{skills}}.\par\vspace{2pt}
+\textbf{{{GROUP 2}}:} {{skills}}.\par\vspace{2pt}
+\textbf{{{GROUP 3}}:} {{skills}}.
+
+\cvsection{\faGraduationCap}{Education}
+\cventry{\textbf{{{DEGREE}}}\\\textit{{{INSTITUTION, specialisation}}}}{{{DATES}}}
+\begin{cvitems}
+  \item {{Grade, with the scale. Thesis title and assessment. Only what is true.}}
+\end{cvitems}
+\vspace{4pt}
+\cventry{\textbf{{{EARLIER DEGREE}}}\\\textit{{{INSTITUTION}}}}{{{DATES}}}
+
+\cvsection{\faBriefcase}{Professional Experience}
+
+\cventry{\textbf{{{TITLE}}}\\\textit{{{ORGANISATION, location}}}}{{{DATES}}}
+\begin{cvitems}
+  \item {{What you built or ran, and what it measured.}}
+  \item {{Second bullet.}}
+\end{cvitems}
+\vspace{5pt}
+
+% ...repeat per role, reverse chronological. Include the early ones: they
+% establish years, and a tailored CV can always drop them.
+
+\cvsection{\faLightbulb}{Selected Projects}
+
+\cventry{\textbf{{{PROJECT}}}\\\textit{{{CONTEXT}}}}{{{DATES}}}
+\begin{cvitems}
+  \item {{One concrete bullet with a measured outcome, or plainly none.}}
+\end{cvitems}
+\vspace{5pt}
+
+% ---- Delete this section if you have no publications -----------------
+\cvsection{\faBook}{Publications}
+{{Authors. "Title". Venue, year.}} \href{{{URL}}}{\nolinkurl{{{display}}}}
+
+\cvsection{\faLanguage}{Languages}
+\textbf{{{LANGUAGE}}:} {{level and scale}}\cvdot
+\textbf{{{LANGUAGE}}:} {{level and scale}}
+
+\end{document}

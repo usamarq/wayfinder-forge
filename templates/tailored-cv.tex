@@ -1,0 +1,148 @@
+% =====================================================================
+%  templates/tailored-cv.tex : designed tailored-CV skeleton
+%
+%  Usage (tailor skill):
+%    1. Copy to applications/<company>-<role>/cv-<slug>.tex
+%    2. Replace every {{...}} placeholder. Content rules (CLAUDE.md):
+%       - every claim comes from MASTER_CV.md: reorder, select, rephrase,
+%         never invent; every number verbatim
+%       - no em dashes anywhere; date ranges use "--" (en dash)
+%       - escape LaTeX specials: \& \% \#
+%    3. Build with XeLaTeX (fontspec, NOT pdflatex), two passes:
+%         xelatex cv-<slug>.tex
+%
+%  Target length: 1-2 pages. Cut projects before cutting experience.
+%  This file is a skeleton; it is not meant to compile until the
+%  placeholders are replaced.
+%
+%  FONTS: EB Garamond and Playfair Display ship with both TeX Live (the
+%  ebgaramond and playfair packages) and MiKTeX, so they resolve from the
+%  distribution's own font tree with no system font installation. If your
+%  distribution is missing them, comment out the fontspec block below and
+%  uncomment the fallback: the layout survives, it just looks plainer.
+% =====================================================================
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,top=1.4cm,bottom=1.3cm,left=1.7cm,right=1.7cm,footskip=0.5cm]{geometry}
+
+% ---- Fonts -----------------------------------------------------------
+\usepackage{fontspec}
+\setmainfont{EBGaramond}[
+  Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+  ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic ]
+\newfontfamily\displayfont{PlayfairDisplay}[
+  Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+  ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic ]
+
+% ---- Fallback if those fonts are not installed -----------------------
+% \usepackage{fontspec}
+% \setmainfont{Latin Modern Roman}
+% \newfontfamily\displayfont{Latin Modern Sans}
+
+% ---- Colours ---------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{2A5C8A}     % change this one line to restyle
+\definecolor{datecolor}{HTML}{4A6E8A}
+\definecolor{bodytext}{HTML}{2B2B2B}
+
+% ---- Packages --------------------------------------------------------
+\usepackage{fontawesome5}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+% ---- Global layout ---------------------------------------------------
+\color{bodytext}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{empty}
+\linespread{1.05}
+\setlength{\emergencystretch}{2em}
+
+% ---- Section heading -------------------------------------------------
+\newcommand{\cvsection}[1]{%
+  \vspace{8pt}%
+  {\displayfont\large\bfseries\color{accent}\MakeUppercase{#1}}\par
+  \vspace{2pt}{\color{accent}\rule{\linewidth}{1pt}}\par\vspace{5pt}}
+
+% ---- Entry: bold title + right-aligned date, italic org line ---------
+% \cventry{Title}{Date}{Organisation}
+\newcommand{\cventry}[3]{%
+  \noindent
+  \begin{minipage}[t]{0.72\linewidth}\raggedright\textbf{#1}\end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.26\linewidth}\raggedleft\small\color{datecolor}#2\end{minipage}\par
+  {\itshape #3}\par\vspace{1pt}}
+
+% ---- Tight bullet list ----------------------------------------------
+\newlist{cvitems}{itemize}{1}
+\setlist[cvitems]{leftmargin=1.35em,labelsep=0.5em,itemsep=1.5pt,topsep=2pt,parsep=0pt,
+  label={\small\color{accent}\textbullet}}
+
+% ---- One contact item: \contact{\faIcon}{text} ----------------------
+\newcommand{\contact}[2]{{\color{accent}#1}~#2}
+
+\begin{document}
+
+% ---- Header: identity facts are stable, the headline is per-role -----
+\begin{center}
+  {\displayfont\fontsize{30}{34}\selectfont\color{accent}{{YOUR NAME}}}\\[5pt]
+  {\large\itshape {{HEADLINE: honest, role-matched, defensible from MASTER_CV.md}}}\\[7pt]
+  {\small\contact{\faEnvelope}{\href{mailto:{{EMAIL}}}{{{EMAIL}}}}\quad
+   \contact{\faPhone}{{{PHONE}}}\quad
+   \contact{\faMapMarker}{{{CITY, COUNTRY}}}}\\[3pt]
+  {\small\contact{\faLinkedin}{\href{{{LINKEDIN URL}}}{{{linkedin display}}}}\quad
+   \contact{\faGithub}{\href{{{GITHUB URL}}}{{{github display}}}}}
+\end{center}
+\vspace{3pt}
+
+% ---- Summary: 3-4 sentences aimed at THIS posting's requirements -----
+\cvsection{Summary}
+{{SUMMARY: plain, specific, evidence-first; no superlatives}}
+
+% ---- Skills: groups mirror the posting's language, evidence-backed ---
+% Only skills present in MASTER_CV.md. Add or remove groups as needed.
+\cvsection{Skills}
+\textbf{{{GROUP 1}}:} {{skills}}.\par\vspace{2pt}
+\textbf{{{GROUP 2}}:} {{skills}}.\par\vspace{2pt}
+\textbf{{{GROUP 3}}:} {{skills}}.
+
+% ---- Education (degrees, institutions, dates verbatim) ---------------
+\cvsection{Education}
+\cventry{{{DEGREE 1}}}{{{DATES}}}{{{INSTITUTION, specialisation}}}
+\vspace{3pt}
+\cventry{{{DEGREE 2}}}{{{DATES}}}{{{INSTITUTION}}}
+
+% ---- Experience: select and order for relevance to the posting -------
+\cvsection{Professional Experience}
+
+\cventry{{{TITLE}}}{{{DATES}}}{{{ORGANISATION}}}
+\begin{cvitems}
+  \item {{Evidence-first bullet: what was built and what it measured.}}
+  \item {{Second bullet if it earns its place.}}
+\end{cvitems}
+\vspace{5pt}
+
+% ...repeat \cventry blocks for each role kept...
+
+% ---- Selected Projects: only the ones that answer this posting -------
+\cvsection{Selected Projects}
+
+\cventry{{{PROJECT}}}{{{DATES}}}{{{CONTEXT, e.g. course, personal, open source}}}
+\begin{cvitems}
+  \item {{One concrete bullet; numbers verbatim from MASTER_CV.md.}}
+\end{cvitems}
+\vspace{5pt}
+
+% ...repeat per project kept...
+
+% ---- Publications (delete this section if there are none) ------------
+% On an academic CV this section moves ABOVE Professional Experience.
+\cvsection{Publications}
+{{Authors. "Title". Venue, year. \href{url}{\nolinkurl{display}}}}
+
+% ---- Languages (state honestly; never imply a level upward) ----------
+\cvsection{Languages}
+\textbf{{{LANGUAGE}}:} {{level and scale}}\quad\textbf{{{LANGUAGE}}:} {{level and scale}}
+
+\end{document}

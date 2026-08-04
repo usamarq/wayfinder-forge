@@ -1,0 +1,70 @@
+% =====================================================================
+%  templates/letter.tex : PDF cover-letter wrapper
+%
+%  letter.md stays the canonical letter text. The tailor skill produces
+%  this PDF as a STANDARD output, not an optional one: portals routinely
+%  require an uploaded letter, and discovering a layout defect during the
+%  application phase is too late.
+%
+%    1. Copy to applications/<company>-<role>/letter-<slug>.tex
+%    2. Paste the final letter.md paragraphs into the body.
+%       URLs must be wrapped as \href{https://...}{\nolinkurl{display}}
+%       so they can line-break; a bare URL overflows the margin.
+%    3. Build with XeLaTeX (fontspec):  xelatex letter-<slug>.tex
+%    4. Gate before this counts as done: exactly 1 page AND zero
+%       "Overfull \hbox" warnings in the .log. Fix wording or breaks
+%       until clean. An overfull box is text past the margin and it is
+%       visible on the printed page.
+%
+%  Same fonts and accent colour as the designed CV, so the pair looks
+%  like one document set rather than two.
+% =====================================================================
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,top=2.2cm,bottom=2.2cm,left=2.4cm,right=2.4cm]{geometry}
+\usepackage{fontspec}
+\setmainfont{EBGaramond}[
+  Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+  ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic ]
+\newfontfamily\displayfont{PlayfairDisplay}[
+  Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+  ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic ]
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{2A5C8A}
+\definecolor{bodytext}{HTML}{2B2B2B}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+
+\color{bodytext}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{9pt}
+\setlength{\emergencystretch}{3em}
+\linespread{1.08}
+
+\begin{document}
+
+\begin{center}
+  {\displayfont\fontsize{22}{26}\selectfont\color{accent}{{YOUR NAME}}}\\[3pt]
+  {\small {{EMAIL}} \quad {{PHONE}} \quad {{CITY, COUNTRY}}}
+\end{center}
+{\color{accent}\rule{\linewidth}{0.8pt}}
+\vspace{6pt}
+
+{{DATE}}\par
+\vspace{4pt}
+
+Dear {{COMPANY}} Team,
+
+{{P1}}
+
+{{P2}}
+
+{{P3}}
+
+{{P4}}
+
+{{SIGN-OFF}},\par
+{{YOUR NAME}}
+
+\end{document}

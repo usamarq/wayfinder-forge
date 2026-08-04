@@ -1,0 +1,94 @@
+% =====================================================================
+%  cvstyle.sty : style package for the designed master CV (cv.tex)
+%
+%  Load with \usepackage{cvstyle} from a file in the SAME folder, and
+%  compile with XeLaTeX (it uses fontspec).
+%
+%  Building blocks this provides:
+%    \cvname{Name}{Headline}        header name and role line
+%    \cvcontact{\faIcon}{text}      one contact item; separate with \cvdot
+%    \cvdot                         the separator between contact items
+%    \cvsection{\faIcon}{TITLE}     section heading with an underline rule
+%    \cvsubsection{Title}           bold subheading inside a section
+%    \cventry{left content}{date}   entry with a right-aligned date
+%    cvitems                        tight bullet list for entry details
+%
+%  To restyle the whole document, change \cvaccent below. That one colour
+%  drives the name, the section headings, the rules and the bullets.
+%
+%  The tailored templates in ../templates/ carry their own self-contained
+%  copies of these macros, so an application folder compiles on its own
+%  without this file. If you change the look here, consider changing it
+%  there too, or your master and your applications stop matching.
+% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cvstyle}[2026/08/04 Wayfinder Forge CV style]
+
+\RequirePackage{xcolor}
+\RequirePackage{fontspec}
+\RequirePackage{fontawesome5}
+\RequirePackage{enumitem}
+\RequirePackage{microtype}
+\RequirePackage[hidelinks]{hyperref}
+
+% ---- Colours ---------------------------------------------------------
+\definecolor{cvaccent}{HTML}{2A5C8A}
+\definecolor{cvdate}{HTML}{4A6E8A}
+\definecolor{cvbody}{HTML}{2B2B2B}
+
+% ---- Fonts -----------------------------------------------------------
+% EB Garamond and Playfair Display ship with both TeX Live (packages
+% ebgaramond and playfair) and MiKTeX, so they resolve from the
+% distribution's own tree with no system font installation.
+\setmainfont{EBGaramond}[
+  Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+  ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic ]
+\newfontfamily\cvdisplayfont{PlayfairDisplay}[
+  Extension=.otf, UprightFont=*-Regular, BoldFont=*-Bold,
+  ItalicFont=*-Italic, BoldItalicFont=*-BoldItalic ]
+
+% ---- Page defaults ---------------------------------------------------
+\color{cvbody}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{empty}
+\linespread{1.05}
+\setlength{\emergencystretch}{2em}
+
+% ---- Header ----------------------------------------------------------
+% \cvname{Name}{Headline}
+\newcommand{\cvname}[2]{%
+  \begin{center}
+    {\cvdisplayfont\fontsize{30}{34}\selectfont\color{cvaccent}#1}\\[5pt]
+    {\large\itshape #2}
+  \end{center}}
+
+% \cvcontact{\faIcon}{text}
+\newcommand{\cvcontact}[2]{{\color{cvaccent}#1}~#2}
+\newcommand{\cvdot}{\quad}
+
+% ---- Section heading -------------------------------------------------
+% \cvsection{\faIcon}{TITLE}
+\newcommand{\cvsection}[2]{%
+  \vspace{8pt}%
+  {\cvdisplayfont\large\bfseries\color{cvaccent}#1~\MakeUppercase{#2}}\par
+  \vspace{2pt}{\color{cvaccent}\rule{\linewidth}{1pt}}\par\vspace{5pt}}
+
+% \cvsubsection{Title}
+\newcommand{\cvsubsection}[1]{\vspace{3pt}{\bfseries #1}\par\vspace{2pt}}
+
+% ---- Entry with a right-aligned date ---------------------------------
+% \cventry{left content}{date}
+\newcommand{\cventry}[2]{%
+  \noindent
+  \begin{minipage}[t]{0.74\linewidth}\raggedright #1\end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.24\linewidth}\raggedleft\small\color{cvdate}#2\end{minipage}\par
+  \vspace{1pt}}
+
+% ---- Tight bullet list -----------------------------------------------
+\newlist{cvitems}{itemize}{1}
+\setlist[cvitems]{leftmargin=1.35em,labelsep=0.5em,itemsep=1.5pt,topsep=2pt,
+  parsep=0pt,label={\small\color{cvaccent}\textbullet}}
+
+\endinput
