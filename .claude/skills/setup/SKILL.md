@@ -113,6 +113,16 @@ relocate and how far, LinkedIn, GitHub or portfolio, current status, earliest st
 
 Anything they leave blank becomes `[TODO]`, not a guess.
 
+Two small things to settle here, because every later document depends on them:
+
+- **The file-name slug.** Every file an employer receives will lead with their name
+  (`lastname-firstname-cv-acme.pdf`), because a file called `cv-acme.pdf` says
+  nothing about whose CV it is once it is in a recruiter's downloads folder. Propose
+  `lastname-firstname` in lowercase ASCII, let them change it, and record it.
+- **A personal website or portfolio**, if they have one. It goes in the CV header
+  and into any form field that offers a website or portfolio slot. Check it loads,
+  and record the form to display (with or without `www`).
+
 Write the Identity and Situation sections of `profile.md`.
 
 > One sentence: this is the file every skill reads to know who it is writing for.
@@ -161,7 +171,12 @@ Three quick blocks:
 
 - **Languages**, with levels, and explicitly: which level must never be implied
   upward. If a market's forms offer a scale with no rung for their actual level, the
-  rule is to pick the lower one and let the CV carry the nuance.
+  rule is to pick the lower one and let the CV carry the nuance. **If they hold a
+  certificate, take the level from the certificate as printed**, not from a score
+  converted in someone's head: a test report can state a lower framework level than
+  the score is commonly assumed to mean, and the wrong one then gets copied into
+  every CV. Ask them to read it off the document, and record the certificate's date,
+  because some calls ask for a *valid* one.
 - **Compensation**: what convention their market uses (monthly gross, annual gross,
   hourly), their floor, their target. Say plainly that a floor is a decision, not a
   fact, and it is theirs alone: you will never fill a salary field they have not
@@ -186,7 +201,11 @@ so they are not surprised:
 3. **No em dashes**, and no confessions in cover letters. Ask if they want to keep
    both defaults. Explain the em dash one in half a sentence (it is the loudest tell
    that a letter was machine-written) and the confession one in half a sentence
-   (gaps belong in `notes.md`, not in a letter meant to argue for them).
+   (gaps belong in `notes.md`, not in a letter meant to argue for them). Then one
+   question about how letters open: by default the assistant writes the opening
+   "draw" itself, from what the company builds and one true thing in their CV, and
+   they correct it at review; the alternative is being asked what draws them before
+   each letter, which is more personal and slower. Record the choice.
 4. **LinkedIn is read-only** unless they turn the networking prong on. Do not
    volunteer to turn it on. If they ask, point them at the caps in
    `linkedin-outreach.md` first and let them decide with the numbers in front of them.
@@ -216,6 +235,17 @@ Rules while writing it:
 - Mark anything they are unsure of `[CONFIRM]`.
 - Include dates, employers, titles, degrees, grades, publications, links, and the
   projects worth showing. Include the boring jobs: they establish years.
+- **Do the years arithmetic now, and write it into the file.** Add up the months of
+  each role from its dates and fill the "Experience arithmetic" table in
+  `MASTER_CV.md`: total industry experience, experience in the specific thing they
+  are targeting, and whether any of it overlaps a degree. A remembered round number that the dates do not add up to
+  is the most damaging kind of error this workflow can make, because it travels into
+  the CV summary, the criteria, the answer bank and every form before anyone adds it
+  up, and applications already sent cannot be recalled. Note any gap between
+  roles as well. They do not have to explain it to you; they do need to know it is
+  visible.
+- Grades, language levels and classifications are copied from the certificate, with
+  its scale.
 - If the CV implies more seniority than the dates support, say so now. Better here
   than in an interview.
 

@@ -61,6 +61,19 @@ Reachable band: {{from}} through {{to}}.
 - Your levels: {{from profile.md}}
 - **Deal-breaker**: roles requiring {{a level you do not have}}. If a role only
   *prefers* a language but operates in another, it is fine; note it in `notes.md`.
+- **Record which band every ad falls into, in the ad's own words**: required alone /
+  required alongside your working language / "preferred" or "an advantage" / not
+  stated. Then decide per band what you do: {{e.g. "required alone: drop; required
+  alongside: apply, flag the risk; preferred: apply"}}. A blanket language
+  deal-breaker can remove most of a market, and some employers do make the
+  compromise, so relaxing a band is a legitimate choice. Make it here, with a date.
+  **What never changes with it: the level stated in every CV, letter and form stays
+  exactly what it is.** Applying with your eyes open is your risk to take; rounding a
+  level up to win the application is not. Expect a higher rejection rate on the
+  relaxed bands, and do not read it as failure.
+- A role that is genuinely unworkable without the language stays a deal-breaker
+  whatever you decide above: client-facing or public-sector work conducted in it,
+  native-level demands, a statutory language qualification.
 - Pattern worth watching in any bilingual market: **domestic companies and
   consultancies often require the local language even when the listing looks
   international; international product companies usually run in English.** Expect it,

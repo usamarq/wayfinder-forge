@@ -3,14 +3,18 @@
 %  Single column, no icons, no colour, linear reading order.
 %
 %  Usage (tailor skill):
-%    1. Copy to applications/<company>-<role>/cv-<slug>-ats.tex
+%    1. Copy to applications/<company>-<role>/<name>-cv-<company>-ats.tex
+%       (<name> is the file-name slug in profile.md: every file an
+%       employer receives leads with the user's name).
 %    2. Replace every {{...}} placeholder. Same content rules as the
 %       designed version (MASTER_CV.md only, numbers verbatim, no em
 %       dashes). This is the version applicant tracking software parses:
 %       mirror the posting's exact keyword spellings here, but ONLY where
 %       the evidence exists in MASTER_CV.md. Mirroring a keyword the CV
 %       cannot support is the polite name for lying.
-%    3. Build with pdfLaTeX:  pdflatex cv-<slug>-ats.tex
+%    3. Build with pdfLaTeX:  pdflatex <name>-cv-<company>-ats.tex
+%    4. Keep this file's content identical to the designed version. When
+%       one gets a correction, the other gets it in the same pass.
 %
 %  Why a second file at all: parsers handle two-column layouts, icons and
 %  ligature-heavy display fonts badly, and a CV that parses into the wrong
@@ -51,6 +55,8 @@
   {{HEADLINE: same as the designed version}}\\[3pt]
   {{CITY, COUNTRY}} \textbar{} {{PHONE}} \textbar{} \href{mailto:{{EMAIL}}}{{{EMAIL}}}\\
   LinkedIn: \href{{{LINKEDIN URL}}}{{{linkedin display}}} \textbar{} GitHub: \href{{{GITHUB URL}}}{{{github display}}}
+  % If profile.md records a personal website, lead this line with it:
+  %   Website: \href{{{WEBSITE URL}}}{{{website display}}} \textbar{} LinkedIn: ...
 \end{center}
 
 \raggedright

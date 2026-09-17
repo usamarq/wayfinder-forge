@@ -137,9 +137,12 @@ Check whether a mail connector (Gmail or equivalent) is connected.
 - **Absent**: `outreach` writes the email into the application folder and they copy
   it into their mail client. Everything else is identical.
 
-If they run several mail accounts, ask which one job-hunts and record it. A draft
-created through a connector authenticated as one account is invisible in another
-account's web view, and that looks like a failure when it is not.
+If they run several mail accounts, ask which one job-hunts and record **the
+address**. A draft created through a connector authenticated as one account is
+invisible in another account's web view, and that looks like a failure when it is
+not. Do not record a web-client index such as Gmail's `/u/2/`: it moves whenever
+accounts are added or removed, so `outreach` finds it at run time by stepping through
+the indexes and reading the tab title.
 
 ## Step 4: write it down, then move on
 

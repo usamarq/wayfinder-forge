@@ -49,6 +49,26 @@ of one.
 | Closed | Call | Funder | Outcome | What to do differently next cycle |
 |---|---|---|---|---|
 
+## Dead doors (so no effort is wasted twice)
+
+<!-- Funders, programmes and employers that are closed to you for a reason that will
+     not change on its own: a nationality or residence rule, a funding ceiling, a
+     field exclusion, a list you cannot access. Quote the rule, give the source and
+     the date, and say what public change WOULD reopen it. Without this table the
+     same door gets re-checked every few months out of habit. -->
+
+| Door | Why it is closed (their wording) | Source | Verified | What would reopen it |
+|---|---|---|---|---|
+
+## Sweep log
+
+<!-- One row per discover-academic run, including the runs that kept nothing: the
+     counts are how a source that has gone quiet, or a facet that has quietly tripled,
+     gets noticed. Record what could NOT be read, too. -->
+
+| Date | Sources read | Hits | Kept | Dropped, and on what | Unread, and why |
+|---|---|---|---|---|---|
+
 ## Long-lead requirements by funder
 
 <!--

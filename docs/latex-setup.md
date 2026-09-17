@@ -20,7 +20,13 @@ winget install MiKTeX.MiKTeX
 
 MiKTeX installs missing packages on demand the first time you compile, so the first
 build is slow and later ones are fast. Leave "install packages on the fly" set to
-Yes.
+Yes. **Slow can mean several minutes with no output at all**, which looks exactly
+like a hang: the first build of `templates/application-bundle.tex` on a fresh MiKTeX
+took over three minutes while `pdfpages` installed itself. Let it finish. If a build
+does get killed mid-install, run it again: when this was tested, the next run simply
+worked. This is
+also why the CV templates avoid optional packages where a few lines of plain TeX
+will do.
 
 **macOS: MacTeX**
 
@@ -95,7 +101,16 @@ done. Fix the wording or the line break, not the margin.
 
 **Wrong page count.** The `.log` file's "Output written" line states it. CVs should
 be 1 to 2 pages and a letter exactly 1. If a letter runs to two pages the argument
-is too long, which is a content problem wearing a layout costume.
+is too long, which is a content problem wearing a layout costume. Getting a
+three-page CV down to two usually takes content cuts *and* slightly tighter margins,
+not one or the other.
+
+**Things the log will never tell you.** A title that collides with its date, a
+heading stranded at the foot of a page, a paragraph that exists in `letter.md` and
+is missing from the letter's `.tex`. None of these is an error to LaTeX. Read every
+built PDF once as a page, and count the letter's paragraphs against `letter.md`.
+The templates guard against the first two (section headings break early rather than
+strand, and dates sit level with wrapped titles), but a guard is not a read.
 
 **`Font ... not found`.** See Fonts above.
 

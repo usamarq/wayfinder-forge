@@ -1,0 +1,82 @@
+% =====================================================================
+%  templates/application-bundle.tex : ONE PDF containing all materials
+%
+%  Some calls, academic ones especially, require a single PDF holding
+%  every document. Build it rather than hoping the portal's separate
+%  upload slots are acceptable.
+%
+%  Usage (tailor-academic, or tailor when an employer asks for one file):
+%    1. Copy to applications/<org>-<position>/<name>-application-<org>.tex
+%       (<name> is the file-name slug in profile.md).
+%    2. Build every part first (CV, letter, anything else you author) and
+%       copy or reference the certificates and transcripts. Paths are
+%       relative to this file; use forward slashes, and wrap a path that
+%       contains spaces as {"folder name/file"}.pdf
+%    3. List the parts below IN THE ORDER THE CALL LISTS THEM. The first
+%       argument is the heading shown on the contents page and in the PDF
+%       bookmarks: use the call's own words for each document.
+%    4. Build with pdfLaTeX, TWICE (the contents page needs the second
+%       pass), and once more if the log still says "Rerun":
+%         pdflatex <name>-application-<org>.tex
+%       On MiKTeX the very first build can take several minutes while
+%       pdfpages installs itself. Let it finish; do not kill it.
+%    5. Check the result page by page, and check the contents page against
+%       the real page numbers. Then upload it to the portal's main document
+%       slot, leave the other slots empty ON PURPOSE, and say so in the
+%       fill map so nobody later "fixes" the empty cover-letter slot.
+%
+%  Page geometry is normalised for you: every included page is scaled to
+%  fit A4 portrait. A scanned diploma that is genuinely wider than tall
+%  therefore sits upright and smaller, which is right. Do NOT rotate it:
+%  that lays its text on its side.
+%
+%  Needs only the pdfpages package, which ships with TeX Live and MiKTeX.
+%  This file is a skeleton; it is not meant to compile until the
+%  placeholders are replaced.
+% =====================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{pdfpages}
+\usepackage[hidelinks,bookmarksopen=true]{hyperref}
+
+\hypersetup{
+  pdftitle={{{YOUR NAME}}: application, {{POSITION}} ({{REFERENCE}})},
+  pdfauthor={{{YOUR NAME}}},
+  pdfsubject={{{INSTITUTION, unit}}}
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% \bundlepart{Heading for contents and bookmarks}{path/to/file.pdf}
+\newcounter{bundlepart}
+\newcommand{\bundlepart}[2]{%
+  \stepcounter{bundlepart}%
+  \includepdf[pages=-,fitpaper=false,
+    addtotoc={1,section,1,{#1},bundlepart\arabic{bundlepart}}]{#2}}
+
+\begin{document}
+
+% ---- Contents page ---------------------------------------------------
+{\LARGE\bfseries {{YOUR NAME}}}\par\vspace{4pt}
+{\large Application: {{POSITION}} ({{REFERENCE}})}\par\vspace{2pt}
+{{INSTITUTION, unit}}\par\vspace{2pt}
+{{DATE}}\par
+\vspace{14pt}
+\renewcommand{\contentsname}{Contents of this file}
+\tableofcontents
+\clearpage
+
+% ---- Parts, in the order the call lists them -------------------------
+\bundlepart{{{Curriculum vitae}}}{{{name-cv-org.pdf}}}
+\bundlepart{{{Motivation letter}}}{{{name-letter-org.pdf}}}
+\bundlepart{{{Transcript of records}}}{{{../../base-cv/transcripts/transcript.pdf}}}
+\bundlepart{{{Degree certificate}}}{{{../../base-cv/certificates/degree-certificate.pdf}}}
+% ...one \bundlepart per document the call names...
+
+\end{document}

@@ -1,5 +1,17 @@
 # Notes: {{COMPANY}}, {{ROLE}}
 
+## Verified at source
+
+<!-- A results card is a lead, not a fact. Before anything is written: where the
+     full ad was read, when, and the lines that decide the application, quoted. -->
+
+- Read on: {{employer's own page or ATS URL}}, {{YYYY-MM-DD}}. Still live: {{yes / no}}
+- Years bar, quoted: {{...}}
+- Language requirement, quoted, and its band: {{required / required alongside the working language / preferred / an advantage / none stated}}
+- Location and hiring area, quoted: {{...}}
+- Deadline: {{date, or "rolling"}}
+- Published salary band, if any: {{band and whether monthly or annual, or "none published"}}
+
 ## Requirements map
 
 <!-- One row per requirement in the posting, including the nice-to-haves.
@@ -29,8 +41,21 @@
      only goes here after you have approved it for this company. -->
 
 - Salary figure approved: {{figure, or "none: leave the field empty and flag it"}}
+  <!-- If the ad publishes a band, the figure belongs at or just above its floor.
+       A standing range written for ads that publish nothing will bid under it. -->
 - Notice / start date stated: {{...}}
 - Anything else agreed: {{...}}
+
+## Letter feedback log
+
+<!-- Feedback comes in rounds. Each round goes here VERBATIM, dated, with what was
+     changed in response. Act on what is settled; do not pre-empt the next round.
+     While content is still arriving, note cut candidates here instead of trimming. -->
+
+### Round 1, {{YYYY-MM-DD}}
+
+- Their words: {{...}}
+- Changed: {{...}}
 
 ## Questions to ask them
 
@@ -48,6 +73,17 @@
 
 | Question | What was entered | Source | Add to answer-bank? |
 |---|---|---|---|
+
+## What the employer actually received
+
+<!-- Filled after submission. File names as uploaded, and any text that differs from
+     the folder: a letter condensed to fit a word-capped box, an answer rewritten at
+     the last minute. If a fact is later corrected, this is what tells you whether
+     this application carries the old value. -->
+
+- Files: {{...}}
+- Text that differs from `letter.md`: {{none / the condensed version, pasted here}}
+- Submitted: {{date and time from the confirmation email, and the sender address}}
 
 ## Follow-up log
 

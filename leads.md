@@ -3,22 +3,32 @@
 Scored postings worth pursuing. `discover` appends here; nothing enters this file
 without clearing the `criteria.md` rubric threshold and surviving every deal-breaker.
 
-**Statuses**: `new` -> `pursuing` (posting saved into `applications/`) ->
-`applied` (moves to `tracker.md`) / `dropped` (with a reason, so it is not
-re-surfaced next sweep).
+**Statuses**: `new` -> `held` (worth keeping, blocked on something named) ->
+`pursuing` (posting saved into `applications/`) -> `applied` (moves to `tracker.md`)
+/ `dropped` (with a reason, so it is not re-surfaced next sweep).
 
-A lead that was dropped stays in this file with its reason. Deleting it means the
-next sweep finds it again, scores it again, and you read it again.
+**This file holds live leads only**: `pursuing`, plus `new` and `held` rows from
+roughly the last two weeks. Everything closed out moves, verbatim, to
+`leads-archive.md`, which opens with a compact dedupe index. Nothing is ever deleted:
+deleting a dropped lead means the next sweep finds it again, scores it again, and
+you read it again. `discover` does the move at the end of each sweep.
 
-| Found | Board | Role | Company | Location | Score | Why | Deadline | Status | URL |
+**A posting has a shelf life of about one to two weeks.** A lead not tailored within
+days of being found is usually not worth tailoring at all, and an old one gets
+re-verified at source before any effort goes into it.
+
+**A score from a results card is provisional.** The "Why" cell says whether the lead
+has been verified at source, where, and when, with the deciding lines quoted (years,
+language, location, deadline). Cards are wrong often enough that nothing is tailored
+from one.
+
+<!-- Session overrides go here, dated and scoped, and are removed when they lapse.
+     Example: "YYYY-MM-DD, this sweep only: the <which> deal-breaker is suspended on
+     the user's instruction. criteria.md is unchanged; the gate returns next session."
+     A standing change is an edit to criteria.md, not a note here. -->
+
+| Found | Board | Role | Company | Location | Score | Why (and verified where, when) | Deadline | Status | URL |
 |---|---|---|---|---|---|---|---|---|---|
-
-## Dropped, with reasons
-
-<!-- Move rows here rather than deleting them. One line of reason is enough. -->
-
-| Found | Role | Company | Reason dropped |
-|---|---|---|---|
 
 ## Sweep log
 

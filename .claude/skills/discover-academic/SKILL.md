@@ -40,7 +40,11 @@ engineering role does not go in `leads-academic.md`.
 2. Sweep the machine-readable sources from `portals.md`, in the order recorded
    there, unless the user names one. A spoken focus overrides ("only MSCA this
    week", "just the funding calls").
-3. Check any watchlist page in `portals.md` whose date trigger has arrived.
+3. Check any watchlist page in `portals.md` whose date trigger has arrived. Close
+   the loop on each one: a check that has **fired** gets its finding recorded in
+   `calls.md` and is re-armed for next year's window; a check whose answer turned
+   out to be **permanent** (a block that is not year-scoped) is retired with the
+   reason, so nobody re-runs it on a schedule.
 4. **Extract per hit**: title, organisation and unit, location, deadline, salary or
    grant sum if shown, URL, and the language the posting is written in. Dedupe
    against `leads-academic.md`, `calls.md` and `tracker-academic.md` (URL, and
@@ -55,6 +59,41 @@ engineering role does not go in `leads-academic.md`.
    ("3 dropped: mobility rule"). **Flag any deadline inside three weeks loudly**,
    before anything else in the report. Grant windows do not reopen for six or twelve
    months.
+
+   **Report what went unread, too.** A source that would not load (a resolver
+   failure, a script-only page, a blocked domain) is a gap in the sweep. It goes in
+   the report and in the `calls.md` sweep log ("Unread, and why"), and if the
+   problem is with the source itself, in its `portals.md` entry with the date. Say
+   whether another source partly covers it, and re-read it next sweep. A source that
+   has gone unread three sweeps running needs a new recipe or a tab the user opens,
+   not a fourth shrug.
+
+8. **Log the sweep** in the `calls.md` sweep log, including a sweep that kept
+   nothing. **A delta sweep that finds nothing new is a result**: the counts are how
+   a source that has gone quiet, or a facet that has quietly tripled, gets noticed.
+   A funder, programme or employer that turns out to be closed to this user for a
+   reason that will not change on its own goes into the "Dead doors" table there,
+   with the rule quoted, so it is never re-checked out of habit.
+
+## Things a sweep learns that the application depends on
+
+Write these into `calls.md` or the lead's row when you see them, because they decide
+whether an application is even possible, and they are easy to lose:
+
+- **A supervisor may have to be agreed before applying.** Some salaried doctoral
+  rounds say so outright, and limit each applicant to one position per call. That
+  turns a September deadline into a June conversation: put the lead time on the
+  watchlist, not only the deadline.
+- **A study right may be a separate application** with its own deadline, sometimes
+  the same day as the position's.
+- **A deadline on a mirror is not the deadline.** Record the one on the employer's or
+  funder's own system, with the closing time and timezone where stated.
+- **A funding database's subject index is not the funder's own scope.** A fund
+  indexed under one field can describe a different focus on its own page. Confirm
+  scope at the funder before scoring a call.
+- **Institutional subscriptions lapse with the affiliation.** If the user reaches a
+  paid funding database through a university login that will expire, sweep it before
+  the account goes, and say so early.
 
 ## When the user picks a lead
 

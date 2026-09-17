@@ -14,8 +14,17 @@ role. The email body IS the cover letter. Same hard rules as any letter
   confession of gaps: that rule applies here too.
 - Never mention work-authorisation status. Answer it only if they ask back.
 - The assistant DRAFTS this. You send it. Never auto-send.
-- Attach the right CV: the designed base-cv/cv.pdf for a human reader, or a
-  segment-tailored version if one exists.
+- Attach the right CV: the designed master for a human reader, or a
+  segment-tailored version if one exists. NAME IT FIRST: copy base-cv/cv.pdf into
+  this folder as <name>-cv-<company>.pdf (<name> is the file-name slug in
+  profile.md) and attach the copy. An open application is a file a company
+  receives, and a file called cv.pdf says nothing about whose CV it is once it has
+  been downloaded.
+- Record the hook's tier below: A, specific to this company, is the default; B,
+  sector-level, only if profile.md has turned it on. No honest hook at either tier
+  means no email.
+- Check every claim against THIS company's row. Inside a batch, "I sent you an
+  application today" is true for one company and false for the next.
 - SIGN-OFF: one item per line, never a pipe-separated single line. A single line
   carrying an email, a phone number and two URLs runs past 80 characters, wraps
   badly in most clients, and mail clients auto-linkify the bare domains into long
@@ -28,8 +37,12 @@ role. The email body IS the cover letter. Same hard rules as any letter
 -->
 
 **To:** {{published recruitment address, OR the open-application form URL}}
+**Channel tier:** {{1 form / 2 recruitment address / 3 named contact / 4 generic}}, source {{url}}, checked {{YYYY-MM-DD}}
+**Live-role check:** {{what they are hiring for today, or "no openings"}}, {{YYYY-MM-DD}}
+**Hook:** {{one line}} (tier {{A / B}})
 **Subject:** {{e.g. "Open application: {{field}} ({{your qualification}})"}}
-**Attach:** {{cv-....pdf}}
+**Attach:** {{<name>-cv-<company>.pdf}}
+**Draft:** {{mail-client draft ID, or "form channel: paste into the form"}}
 
 Dear {{COMPANY}} Team,
 

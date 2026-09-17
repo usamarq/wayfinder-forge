@@ -16,10 +16,15 @@ you: "discover linkedin"
      -> reads three pages per query, scores every hit against your criteria,
         drops the ones with a deal-breaker, appends 6 leads to leads.md
 
+you: "verify those"
+     -> takes each lead to the employer's own page, because a results card is a
+        lead and not a fact: two die on a years bar the card never showed, one
+        hires in another country, three survive with the ad saved verbatim
+
 you: "tailor the Acme one"
-     -> saves the ad verbatim, maps every requirement to evidence in your CV,
-        names the gaps, writes a designed CV, an ATS CV and a letter,
-        compiles all three, and tells you the weakest point of the application
+     -> maps every requirement to evidence in your CV, names the gaps, writes a
+        designed CV, an ATS CV and a letter, compiles all three, and tells you
+        the weakest point of the application
 
 you: "apply-assist acme"
      -> opens the portal in your browser, fills every field it can source
@@ -81,6 +86,14 @@ the company's goodwill and yours. A hook forces your review on every edit to
 `MASTER_CV.md`, so the source of truth only ever changes when you look at the diff
 and say yes.
 
+A duration is a number too. "N years of experience" gets summed from the dates in
+your CV, month by month, once, with the arithmetic written down; a language level is
+copied from the certificate as printed, not converted from a score in someone's
+head. Those are the two errors a workflow like this is most exposed to, because one
+wrong value in the source gets copied into every document built from it. `CLAUDE.md`
+carries the procedure for the day a fact turns out to be wrong: fix the source,
+sweep every reusable file, leave what was sent as it was sent.
+
 Two consequences worth knowing before you start:
 
 - The assistant will tell you an application is not worth sending, and it will name
@@ -97,18 +110,18 @@ Two consequences worth knowing before you start:
 
 | Skill | What it does |
 |---|---|
-| `discover` | Sweeps a job board in your own logged-in browser using the queries in `criteria.md`, scores every hit against your rubric, appends the survivors to `leads.md`. Reads only; never applies to anything. |
-| `tailor` | One saved posting in, a reviewable application out: designed CV, ATS CV, cover letter, all compiled, plus `notes.md` with every gap named and the single weakest point stated. |
-| `outreach` | Open applications and cold emails to companies with no advertised role. Checks their careers page for a live match first, finds a published channel, researches one true hook, drafts it, and stages it for you to send. |
-| `apply-assist` | Opens the application portal, fills what it can source honestly, attaches the right PDF, flags what only you can answer, and stops before Submit. |
+| `discover` | Sweeps a job board in your own logged-in browser using the queries in `criteria.md`, scores every hit against your rubric, appends the survivors to `leads.md`. Then, on request, a **verify pass** takes each lead to the employer's own page, because cards hide years bars, language requirements and wrong locations. Reads only; never applies to anything. |
+| `tailor` | One saved posting in, a reviewable application out: designed CV, ATS CV, cover letter that opens on what draws you to their work, all compiled, files named with your name first, plus `notes.md` with every gap named and the single weakest point stated. |
+| `outreach` | Open applications and cold emails to companies with no advertised role. Checks their careers page for a live match first, finds a published channel, researches one true hook, drafts it, and stages it in your own mail drafts for you to send. |
+| `apply-assist` | Opens the application portal, fills what it can source honestly, attaches the right PDF, flags what only you can answer (with the ad's published salary band beside the salary field), and stops before Submit. |
 
 ### Academic track
 
 | Skill | What it does |
 |---|---|
 | `discover-academic` | Sweeps EURAXESS, university boards, funding-call APIs and national job portals. Checks eligibility gates before scoring. Positions to `leads-academic.md`, funding calls to `calls.md`. |
-| `tailor-academic` | Gates first, then motivation letter, research statement or grant work plan, academic CV, a required-documents checklist, and the long-lead items (referees, supervisor statements, transcripts) flagged early. |
-| `outreach-academic` | Supervisor approaches, group enquiries, referee requests, funder eligibility questions. Published university addresses only, never guessed. |
+| `tailor-academic` | Gates first, then motivation letter, research statement or grant work plan, academic CV, a required-documents checklist, and the long-lead items (referees, supervisor statements, transcripts) flagged early. Runs a direction dialogue before the letter when a call wants a research direction you have not settled, and builds the single merged PDF some calls demand. |
+| `outreach-academic` | Supervisor approaches, group enquiries, referee requests and referee notices, funder eligibility questions. Published university addresses only, never guessed, titles checked at source. |
 
 Both tracks are installed. If you only want one, ignore the other's files; nothing
 breaks. Setup asks which you are running and configures accordingly.
@@ -120,8 +133,10 @@ profile.md              who you are, what you want, what you cannot compromise o
 MASTER_CV.md            the source of truth for every claim
 answer-bank.md          honest reusable answers to form questions
 criteria.md             target roles, deal-breakers, the scoring rubric
-leads.md                scored postings worth pursuing
-tracker.md              one row per application, with a follow-up date
+leads.md                scored postings worth pursuing (live ones only)
+tracker.md              one row per application in flight, with a follow-up date
+leads-archive.md        dropped, applied and stale leads, behind a dedupe index
+tracker-archive.md      rejected and gone-quiet applications, behind a dedupe index
 open-applications.md    target companies for spontaneous applications
 linkedin-outreach.md    log of every connection request and message
 
@@ -148,9 +163,10 @@ Four Node scripts in `.claude/hooks/`, wired up in `.claude/settings.json`:
 - **repo guard**: blocks visibility changes on an existing repo, force-pushes, history
   rewrites, and pushes to any remote other than the one you configured. It stays out
   of the way otherwise: creating repos is allowed, and nothing is checked at all until
-  an origin exists, because a fresh clone has nothing to protect yet. The one thing it
-  pauses for is creating a **public** repo from a working copy that already holds your
-  CV.
+  an origin exists, because a fresh clone has nothing to protect yet. It reads each
+  `git push` by its own arguments, so a URL or the word `--force` inside a commit
+  message in the same command does not trip it. The one thing it pauses for is
+  creating a **public** repo from a working copy that already holds your CV.
 - **em-dash gate**: rejects em dashes in outward documents. The em dash is the
   loudest tell that a letter was machine-written.
 
@@ -201,6 +217,8 @@ first week:
 Wayfinder Forge is the public, personal-data-free sister of a private repo that has
 been running a real job hunt since July 2026. The workflow, the hard rules and the
 hard-won portal notes come from that; the CV, the trackers and the leads do not.
+`CHANGELOG.md` records what each sync from the private run brought over, and what an
+existing user needs to do about it.
 
 MIT licensed. Use it, fork it, change the rules to suit your market. If you learn
 something about a portal or a board that would save the next person an hour, a pull

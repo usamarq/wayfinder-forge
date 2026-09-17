@@ -25,8 +25,25 @@ One phrase per query. Boards match long queries badly: "Data Engineer" is a quer
 "senior data engineer with dbt and Snowflake, hybrid Amsterdam" is not.
 
 Six core queries run every sweep, in order. Extended queries run on request. Retire
-a query that has returned nothing useful for a month; add one every time you notice
-a title you had not thought of.
+a query that has returned nothing on-target for three sweeps running (`discover`
+logs each query's yield in `boards.md` and will recommend the cut); add one every
+time you notice a title you had not thought of. Watch for overlap as well: when page
+one of four queries is the same twenty cards, page one of each is enough, and the
+depth belongs to the one query that reaches different employers.
+
+### Your deal-breakers, when the market argues with them
+
+A deal-breaker that removes most of a market is worth a second look, and relaxing
+one is a legitimate decision. Do it deliberately, with a date, in `criteria.md`, and
+write down what does **not** change with it. The usual case is a language
+requirement: you can decide to apply to roles that ask for a language you are still
+learning, and accept the higher rejection rate that comes with that, but the level
+stated in every CV, letter and form stays exactly what it is. Applying with your
+eyes open is your risk to take. Rounding a level up to win the application is not on
+the table.
+
+If you only want to try it for one sweep, say so: the override is recorded as scoped
+to that session and the gate returns by default.
 
 ### The boards in `.claude/skills/discover/boards.md`
 
@@ -58,7 +75,25 @@ change them:
 - **No confessions in cover letters.** No "I'll be honest" followed by a list of
   what you lack. Gaps go in `notes.md`, where they inform the letter without being
   in it. The academic track relaxes this narrowly, and only when a call asks a
-  direct question. See `CLAUDE.md`.
+  direct question. See `CLAUDE.md`. The same goes for form fields that probe a thin
+  area: describe what you did, precisely, and let the reader judge.
+- **Few colons and semicolons in letters.** A side effect of banning em dashes is
+  that drafts drift toward chains of colons, which read as machine-written just as
+  clearly. The skills count them before showing you a letter.
+- **Letters open with the draw**, what it is about that company's work that interests
+  you, and the assistant writes that opening itself from the posting and your CV.
+  Set "Cover letter openings: ask me what draws me first" in `profile.md` if you
+  would rather supply it each time. It is more personal, and it is slower: waiting
+  for an anecdote per letter can stall a whole batch.
+- **Your words beat the assistant's.** Write any paragraph rough and it will be
+  edited for grammar and register, keeping your sentence shapes.
+
+### How your files are named
+
+Every file an employer receives leads with your name: `<name>-cv-<company>.pdf`,
+`<name>-letter-<company>.pdf`. `<name>` is the file-name slug in `profile.md`.
+Change it there if you prefer `firstname-lastname`, initials, or a transliteration
+that employers in your market will recognise.
 
 ## Turning things off
 
@@ -78,6 +113,22 @@ and `sketches/`, or delete them along with the three `*-academic` skills. Nothin
 the industry side reads them.
 
 **The LinkedIn prong.** It is already off. It only turns on if `profile.md` says so.
+
+## Turning things on
+
+Three outreach settings ship off, or at their conservative value, and live in
+`profile.md` under "Optional features". Each one trades sharpness or safety for
+volume, which is why none of them is a default.
+
+| Setting | What it does | What it costs |
+|---|---|---|
+| LinkedIn networking prong | Connection requests and one intro message after acceptance, capped and logged | Account risk. Read the caps in `linkedin-outreach.md` first. |
+| Sector-level hooks | Lets an outreach email go out on an honest fit at sector level where no company-specific reason exists | Reply rate per email. Tailored applications are never affected, and a company with no honest hook at either level is still dropped. |
+| No outreach batch ceiling | Runs until the companies that publish an email channel and have an honest hook run out | Your attention. In practice the supply is small, and it, not the ceiling, ends the run. |
+
+The LinkedIn caps themselves are yours to change. Record the change with its date in
+`linkedin-outreach.md`, and set the weekly cap in the same breath as the session
+cap.
 
 ## Adding a skill of your own
 
@@ -104,7 +155,10 @@ The `description` is what decides whether the skill gets invoked, so write it as
 Ideas that fit this repo well and are not shipped:
 
 - **interview-prep**: turn `posting.md`, `research.md` and `notes.md` into a prep
-  sheet, including the gap questions you are most likely to be asked.
+  sheet, including the gap questions you are most likely to be asked. A folder shape
+  that works is in `applications/README.md` ("When an interview lands"): copies of
+  exactly what they hold, their emails verbatim, the material behind the
+  interviewers' own work, and answers built from your recorded incidents.
 - **debrief**: after an interview, capture what was asked and what you answered
   badly, into `tracker.md`'s outcomes table.
 - **salary-research**: gather published bands for a role and location, with sources,
@@ -120,8 +174,9 @@ one:
 | Rule | What it prevents |
 |---|---|
 | Every claim traces to `MASTER_CV.md` | Getting into an interview you cannot survive |
-| Numbers verbatim | A rounded metric becoming a number you have to defend |
-| Never submit or send | An application going out with a mistake nobody read |
+| Numbers verbatim, durations summed from dates, levels copied from certificates | A remembered round number, or a generously converted score, going out in applications that cannot be recalled |
+| Never submit or send, and drafts go to your own mail drafts | An application going out with a mistake nobody read |
+| Files lead with your name | Your CV sitting anonymous in a recruiter's downloads folder |
 | Gaps named in `notes.md` | Discovering the gap in the first interview instead |
 | Status never volunteered | Answering a question that was not asked, badly |
 | Sources on outside facts | A deadline remembered wrong, once, expensively |

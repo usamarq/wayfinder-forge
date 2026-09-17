@@ -34,6 +34,15 @@ positions in Europe, including MSCA-funded posts.
 - Cross-posts heavily with national portals and with the regional academic
   aggregators. Dedupe on URL and on organisation plus title; the same position
   routinely appears three times under slightly different wording.
+- Pagination is `&page=N`, zero-indexed. Results can be sorted by deadline with a
+  `sort[...]` parameter pair: set it in the UI once and copy it with the rest.
+- **Record the facet counts at every sweep.** They move a lot. One funding-programme
+  facet roughly quadrupled in seven weeks, from a list worth skimming to one worth
+  reading in full, and most of the growth was a few large doctoral networks in other
+  fields. The count is what tells you which of those it is.
+- University positions in a country usually surface on that country's EURAXESS facet
+  as well as on the university's own board. That makes it a partial safety net on a
+  day when one university's site will not load, not a substitute for reading it.
 
 Recorded facet URLs:
 
@@ -99,6 +108,29 @@ apply stage:
   posting.** Hand the tab over and resume once the user is on the form.
 - **Workday**: the hardest, at the apply stage only. See `../discover/boards.md`.
 
+Reading these boards, as opposed to applying through them:
+
+- **Some listing pages are tables, not links.** On LAURA-style boards each vacancy is
+  a table row (title, period start, period end, unit), so an extractor that collects
+  anchors sees zero results on a page that is full. Parse the rows. A board that
+  really is empty usually says so in words.
+- **A university's own "current vacancies" page often links every ad on its
+  recruitment system**, and both the list and the individual ads fetch cleanly,
+  sometimes with a `?lang=en` switch. Prefer that page to the recruitment system's
+  own search.
+- **Unit pages move when faculties reorganise.** A watchlist URL that starts
+  returning 404 may mean the unit now sits under a different faculty, not that it
+  closed. Find the new address before dropping the row.
+- **State research institutes often advertise on a national government jobs portal
+  that renders only by script.** A plain fetch returns the header and the footer and
+  nothing between. Classify it as browser-only, and read it from a tab the user
+  opens, rather than recording "no listings".
+- **Submitted applications are often editable until the deadline**, through a
+  reopen-and-resubmit link, an "edit document" control in the candidate portal, or
+  an edit link in the acknowledgement email (which can expire first). Worth knowing
+  on the day an error turns up in a document that has already gone in. The edit and
+  any confirming button are the user's.
+
 ---
 
 ## Funding-call sources
@@ -128,6 +160,28 @@ Record the sum, the duration, and whether it is taxable or has social-security
 consequences in the relevant country. A grant and a salary of the same headline
 figure are not the same income.
 
+Querying a funding database:
+
+- **A national funding-call database often has an open search API behind its web
+  interface**, and it is worth ten minutes to find: it returns structured calls with
+  no browser at all. A bare search tends to return years-old calls in arbitrary
+  order, and guessing a field such as `status:open` can return nothing because no
+  such field exists. **Find the deadline field and query a date range, sorted by
+  deadline.** Record the exact working query here the day it works.
+- **The database's subject index is not the funder's own scope.** A fund filed under
+  the user's field can state a different focus on its own page. Confirm scope at the
+  funder before scoring a call.
+- **Login-gated databases** (institutional subscriptions) are read only from a tab in
+  the user's own signed-in session; never automate the sign-in. If access depends on
+  a university account that will lapse, record the lapse date in the watchlist and
+  sweep before it.
+- A list that turns out to be staff-only, or otherwise out of the user's reach, is
+  ruled out in a line with the date, and the coverage loss is stated. Do not plan
+  around it.
+- **Dead domains get recorded as dead.** A retired funding database whose domain has
+  been squatted still turns up in search results and in older guidance, sometimes
+  serving stale look-alike pages. Note it here so nobody links or reads it again.
+
 ---
 
 ## Watchlist
@@ -135,9 +189,23 @@ figure are not the same income.
 Sources or calls that are not open now but will be, or eligibility questions that
 resolve on a known date. `discover-academic` checks these when the trigger arrives.
 
-| Trigger date | What to check | Why | Source |
-|---|---|---|---|
-| {{YYYY-MM-DD}} | {{...}} | {{...}} | {{url}} |
+| Trigger date | What to check | Why | Source | State |
+|---|---|---|---|---|
+| {{YYYY-MM-DD}} | {{...}} | {{...}} | {{url}} | {{armed / fired YYYY-MM-DD / retired YYYY-MM-DD}} |
+
+Every row ends in one of three states, and the row stays in the table either way:
+
+- **armed**: waiting for its trigger. Recurring checks ("monthly") stay armed and
+  get their last-checked date and finding updated in place.
+- **fired**: the trigger arrived and the check was run. Put the finding in `calls.md`
+  and re-arm the row for next cycle's window if the thing recurs.
+- **retired**: the answer turned out to be permanent. Say why, and what public news
+  would change it, so it is not re-checked on a schedule out of habit.
+
+**Annual rounds belong here with their lead time, not just their deadline.** A
+doctoral round that needs a supervisor's recommendation or an agreed supervisor
+before applying is really a task several months earlier: "contact a group by June"
+is the row, and the September deadline is its footnote.
 
 ---
 

@@ -79,6 +79,30 @@
 
 - {{...}}
 
+### Experience arithmetic
+
+<!--
+  Do this ONCE, from the dates above, and every "N years" in every document comes
+  from here. A remembered round number that the dates do not add up to travels into
+  the CV summary, the criteria, the answer bank and every form before anyone checks
+  it, and applications already sent cannot be recalled.
+
+  Count months per role and show the sum. Say what each total includes. A total that
+  counts roles held DURING a degree (thesis work, internships, assistantships) may
+  only be stated with that label. Note overlaps with a degree, and any gap between
+  roles: a reader adding up your CV sees both. The explanation for a gap is interview
+  material; it is never volunteered in a document.
+-->
+
+| Total | Months | How it adds up | May be stated as |
+|---|---|---|---|
+| Industry experience (excluding roles held during a degree) | {{n}} | {{role A n + role B n + role C n}} | {{"over N years", or whatever the sum honestly supports}} |
+| All professional roles, including those held during a degree | {{n}} | {{...}} | {{only with the label "including ..."}} |
+| In roles titled for {{your target field}} | {{n}} | {{...}} | {{...}} |
+
+- Overlaps with a degree: {{role and months, or "none"}}
+- Gaps between roles: {{dates, or "none"}}. {{Explanation, for interviews only.}}
+
 ## Projects
 
 <!-- Personal, academic, open-source, hackathon. Anything you can show or
@@ -154,3 +178,19 @@
 
 - {{skill or experience frequently asked for that you do not have}}
 - {{...}}
+
+### Confirmed exposure levels
+
+<!--
+  When an application makes you say exactly how far your exposure to something goes,
+  record the answer here, dated, so it is never re-asked and never drifts upward
+  between applications. The useful levels: used professionally / used in a project
+  you can show / coursework / personal experiments / evaluated and set aside / none.
+  State what you did NOT do as plainly as what you did ("used the managed service
+  only; never operated a cluster"). This is the wording academic letters and form
+  answers are then held to.
+-->
+
+| Topic | Confirmed level, in your words | Confirmed on |
+|---|---|---|
+| {{...}} | {{...}} | {{YYYY-MM-DD}} |

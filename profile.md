@@ -20,9 +20,16 @@ STATUS: NOT SET UP
 - Phone: {{international form, plus the national form if local portals want it}}
 - Location: {{city, country}}
 - Willing to relocate: {{no / within <region> / anywhere / named places}}
+- File-name slug: {{lowercase ASCII, e.g. `lastname-firstname`}}
+  <!-- Every file an employer receives leads with this slug, which the rest of the
+       repo writes as `<name>`: `<name>-cv-<company>.pdf`,
+       `<name>-letter-<company>.pdf`. A file called `cv-acme.pdf` says nothing about
+       whose CV it is once it is in a recruiter's downloads folder. -->
 - LinkedIn: {{url, or "none"}}
 - GitHub / portfolio: {{url, or "none"}}
-- Other public profile: {{Google Scholar, ORCID, personal site, or "none"}}
+- Personal website: {{url in the form you want displayed, or "none". Goes in the CV
+  header and into any form field that offers a website or portfolio slot.}}
+- Other public profile: {{Google Scholar, ORCID, or "none"}}
 
 ## Situation
 
@@ -51,7 +58,9 @@ STATUS: NOT SET UP
 
 ## Languages
 
-- {{language}}: {{level, with the certificate or scale if you have one}}
+- {{language}}: {{level **as printed on the certificate**, with the test, the score
+  and the certificate's date. Do not convert a score to a framework level from
+  memory; read it off the document.}}
 - {{language}}: {{level}}
 - Working language you need the job to run in: {{...}}
 - Never claim: {{levels you must not let a document imply, e.g. "working <language>"}}
@@ -88,6 +97,10 @@ Defaults from `CLAUDE.md` apply unless overridden here.
 
 - Register: {{understated and plain (default) / warmer / more direct}}
 - Em dashes: {{banned (default, and a hook enforces it) / allowed}}
+- Cover letter openings: {{the assistant writes the draw from the posting and my CV,
+  and I correct it at review (default) / ask me what draws me first}}
+- Letter length when a call allows more than a page: {{one page anyway (default) /
+  I will say per letter}}
 - Cover letter sign-off: {{"Warm regards" / "Kind regards" / "Sincerely" / other}}
 - Anything you never want written about you: {{...}}
 - Anything you always want mentioned: {{...}}
@@ -98,13 +111,24 @@ Defaults from `CLAUDE.md` apply unless overridden here.
 - LaTeX binaries on PATH: {{yes / no, they live at <path>}}
 - Browser automation: {{Claude in Chrome / Playwright MCP / none}}
 - Mail connector for staging drafts: {{Gmail connector / none, I copy and paste}}
-- If you run several mail accounts, which one job-hunts: {{e.g. "Gmail account u/2"}}
+- If you run several mail accounts, which one job-hunts: {{the ADDRESS, e.g.
+  "jane.jobs@example.org". Not a web-client index such as Gmail's `/u/2/`: that
+  number moves whenever accounts are added or removed, so it is found at run time.}}
 
 ## Optional features, off unless turned on here
 
 - LinkedIn networking prong (connection requests plus one intro message after
   acceptance, capped and logged in `linkedin-outreach.md`): **{{off / on}}**
   <!-- Read the caps in linkedin-outreach.md before enabling. Your account, your risk. -->
+- Sector-level hooks in outreach emails (a true fit at the level of what a company
+  does, where no company-specific hook exists): **{{off / on}}**
+  <!-- Off means every outreach email needs a reason that could not be sent to any
+       other company. On trades sharpness for volume, for outreach emails only;
+       tailored applications are never affected. A company with no honest hook at
+       either level is still dropped. -->
+- Outreach batch ceiling: **{{5 to 8 companies per run (default) / none}}**
+  <!-- With no ceiling, a run ends when the companies that publish an email channel
+       AND have an honest hook run out. In practice that supply is small. -->
 
 ## Session log
 

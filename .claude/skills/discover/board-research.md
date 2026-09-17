@@ -129,6 +129,45 @@ Verify the filters really applied before recording: the result count plus the
 active-search header. A filter that silently failed to apply is how a recipe gets
 recorded wrong and then trusted for months.
 
+### What the first real sweep tends to overturn
+
+A research verdict is a hypothesis until a board has been swept once with the user's
+real queries. Expect some of these, and write down whichever you meet:
+
+- **The filter that was never there.** A location or region parameter that is
+  silently ignored returns the full feed and looks like a working filter until the
+  count is read. A region page the research pass saw as "blocked" can turn out to be
+  a missing page. If there is no working way to restrict the board to where the user
+  can be hired, the board is out, however good its inventory looked.
+- **The slug that does not exist.** On boards with role-slug URLs, a slug the board
+  does not know can return the entire unfiltered feed rather than an error. Confirm
+  the first cards match the role.
+- **Remote is usually remote within one country.** A "Europe, remote" slice of
+  thousands is a pool to filter, not a pool of leads: most cards are anchored to a
+  single country and exclude everyone outside it. Gate each survivor on the ad's own
+  hiring-area line, and treat a card with no stated hiring area as unconfirmed.
+- **The public API is often a teaser.** A board's open JSON endpoint can hold a small
+  subset dominated by marketplace shells, while the real inventory sits on an
+  ordinary page behind a consent wall.
+- **One company can be most of a feed.** Date-sorted feeds get flooded by a single
+  employer reposting, by staffing shells parsed as "remote from anywhere", and by
+  contractor task-work platforms. Drop those by company name and judge the board on
+  what is left.
+- **Location labels can be flatly wrong** on aggregators that parse them by machine.
+  Spot-check against the source ad before trusting a facet.
+- **A board that links straight to the employer's applicant-tracking URL is worth
+  more than its size suggests**: every lead arrives already resolved to the source.
+- **Set the cadence from the churn you measured**, not from habit: a board that adds
+  one relevant role a week is a fortnightly board, and a tiny curated one can be
+  monthly.
+
+Demote a board the same day it fails, and move it to "Ruled out" with what was
+learned. Reinstate one the same way when fresh evidence contradicts an old verdict,
+leaving the old verdict visible.
+
+**Keep a "maybe" pile**, with the one check that would settle each entry, so a
+half-evaluated board is neither swept blind nor researched again from scratch.
+
 ## Step 5: write the rows, and be honest about them
 
 Into `boards.md`:

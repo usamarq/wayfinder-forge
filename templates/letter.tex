@@ -6,15 +6,21 @@
 %  require an uploaded letter, and discovering a layout defect during the
 %  application phase is too late.
 %
-%    1. Copy to applications/<company>-<role>/letter-<slug>.tex
+%    1. Copy to applications/<company>-<role>/<name>-letter-<company>.tex
+%       (<name> is the file-name slug in profile.md: every file an
+%       employer receives leads with the user's name).
 %    2. Paste the final letter.md paragraphs into the body.
 %       URLs must be wrapped as \href{https://...}{\nolinkurl{display}}
 %       so they can line-break; a bare URL overflows the margin.
-%    3. Build with XeLaTeX (fontspec):  xelatex letter-<slug>.tex
+%    3. Build with XeLaTeX (fontspec):  xelatex <name>-letter-<company>.tex
 %    4. Gate before this counts as done: exactly 1 page AND zero
 %       "Overfull \hbox" warnings in the .log. Fix wording or breaks
 %       until clean. An overfull box is text past the margin and it is
 %       visible on the printed page.
+%    5. Count the paragraphs here against letter.md. This file is a
+%       second copy of the text, and a dropped paragraph is not a LaTeX
+%       error, so nothing else will tell you. Rebuild and re-date after
+%       any late edit to letter.md.
 %
 %  Same fonts and accent colour as the designed CV, so the pair looks
 %  like one document set rather than two.

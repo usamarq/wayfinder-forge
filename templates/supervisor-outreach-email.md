@@ -25,10 +25,15 @@ for the relationship state before writing a word.
 -->
 
 **Relationship:** {{warm: what was said, when, and what was agreed / cold: no prior contact}}
-**To:** {{published address}}
+**To:** {{published address. Never the guessable firstname.lastname form: people with
+compound names often have an address that does not follow the pattern.}}
 **Address source:** {{url}}, verified {{YYYY-MM-DD}}
-**Purpose:** {{supervision enquiry / group enquiry / referee request / eligibility question}}
-**Attachment:** {{cv.pdf and any sketch, and a note that YOU attach it before sending}}
+**Title source:** {{the institution's own research portal or staff page}}, verified {{YYYY-MM-DD}}
+**Purpose:** {{supervision enquiry / group enquiry / referee request / referee notice / eligibility question}}
+**Thread:** {{new conversation / reply inside the existing thread of YYYY-MM-DD}}
+**Attachment:** {{<name>-cv-<org>.pdf and any sketch, named with your file-name slug,
+and a note that YOU attach it before sending}}
+**As sent:** {{filled in afterwards: the date, and any wording you changed before sending}}
 
 **Subject:** {{specific, and readable in a notification preview. "Doctoral supervision enquiry: <topic>" beats "Enquiry".}}
 

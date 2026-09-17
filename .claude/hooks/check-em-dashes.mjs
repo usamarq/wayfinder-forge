@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 // PostToolUse hook (Write|Edit): the em-dash gate for outward documents.
 //
-// CLAUDE.md voice rule: never use em dashes; use a colon, comma, or hyphen. The
-// reason is practical rather than aesthetic. The em dash is the single loudest
-// tell that a document was written by a language model, and a cover letter that
-// reads as machine-written gets binned before its argument is read.
+// CLAUDE.md voice rule: never use em dashes; use a comma, a full stop or a
+// conjunction, and a colon or hyphen only where one is natural. The reason is
+// practical rather than aesthetic. The em dash is the single loudest tell that a
+// document was written by a language model, and a cover letter that reads as
+// machine-written gets binned before its argument is read. (Do not trade every
+// em dash for a colon: a chain of colons reads as machine-written too.)
 //
 // Scope: .tex files, everything in sketches/, and authored outward documents
 // under base-cv/, applications/, templates/ and sketches/ (cover letters,
@@ -85,8 +87,9 @@ lines.forEach((line, i) => {
 
 if (bad.length) {
   process.stderr.write(
-    "EM-DASH GATE (CLAUDE.md voice rule: never use em dashes; use a colon, " +
-      `comma, or hyphen). Fix these lines in ${path}:\n${bad.join("\n")}\n`
+    "EM-DASH GATE (CLAUDE.md voice rule: never use em dashes; use a comma, a " +
+      "full stop or a conjunction, and a colon only where one is natural, " +
+      `because colon chains read as machine-written too). Fix these lines in ${path}:\n${bad.join("\n")}\n`
   );
   process.exit(2);
 }
