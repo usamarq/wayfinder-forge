@@ -28,6 +28,23 @@
 // the single combination that publishes somebody's CV, and one confirmation
 // click is a fair price for it. Delete the publicCreate block below if you want
 // even that gone.
+//
+// SCOPING (fixed 2026-09, after a false positive hit repeatedly in real use).
+// The push and remote rules used to test the WHOLE command string, so
+//
+//   git commit -m "... https://example.org/some/link ..." && git push origin main
+//
+// was blocked as "push names a remote that is not this repo's origin". The URL
+// was in the commit message, not in the push arguments, and commit messages and
+// PR bodies carry URLs all the time, so the guard fired on correct behaviour
+// whenever a commit and a push shared one command. A commit message containing
+// the text "--force" had the same problem.
+//
+// Each rule below now isolates the `git push` (or `git remote add|set-url`)
+// invocation and inspects only ITS OWN arguments: from the subcommand to the
+// next shell separator or newline. This is more accurate, not weaker. A flag
+// that belongs to a push has to appear inside the push segment, so every
+// genuine one is still caught.
 
 import { execSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
@@ -106,7 +123,25 @@ if (/gh\s+repo\s+create\b/.test(cmd) && /(^|\s)--public(\s|$)/.test(cmd) && isSe
 }
 
 // ---------------------------------------------------------------------------
+// Command segments. A segment runs from the git subcommand to the next shell
+// separator (; && || |) or newline, which is where that command's arguments end.
+// Text elsewhere in a compound command, notably a commit message, is ignored.
+// Global options between `git` and the subcommand (-C <path>, -c k=v, --flag)
+// are allowed for, so `git -C some/dir push --force` is still seen as a push.
+// ---------------------------------------------------------------------------
+const GIT_GLOBAL_OPTS = String.raw`(?:\s+(?:-[cC]\s+(?:"[^"]*"|'[^']*'|\S+)|--[\w-]+(?:=(?:"[^"]*"|'[^']*'|\S+))?))*`;
+const segments = (subcommand) =>
+  cmd.match(
+    new RegExp(String.raw`git${GIT_GLOBAL_OPTS}\s+${subcommand}\b[^;&|\r\n]*`, "g")
+  ) || [];
+
+const pushSegments = segments("push");
+const remoteSegments = segments(String.raw`remote\s+(?:add|set-url)`);
+
+// ---------------------------------------------------------------------------
 // Destructive or publishing actions, always blocked on an established repo.
+// These scan the whole command on purpose: each names a single-purpose
+// subcommand with no legitimate reason to appear in a command run here.
 // ---------------------------------------------------------------------------
 const blocked = [
   {
@@ -114,20 +149,12 @@ const blocked = [
     why: "this changes an existing repository's visibility, ownership or existence",
   },
   {
-    re: /gh\s+api\b[^\n]*(-X|--method)\s*(PATCH|DELETE|POST|PUT)/i,
+    re: /gh\s+api\b[^;&|\r\n]*(-X|--method)\s*(PATCH|DELETE|POST|PUT)/i,
     why: "this writes to the GitHub API",
   },
   {
     re: /gh\s+(gist|release)\s+create/,
     why: "this publishes repository content sideways",
-  },
-  {
-    re: /git\s+push\b[^\n]*(--force\b|--force-with-lease\b|(^|\s)-f(\s|$))/,
-    why: "a force-push rewrites published history",
-  },
-  {
-    re: /git\s+push\b[^\n]*(--mirror\b|--delete\b|\s\+[\w./-]+:)/,
-    why: "this is a destructive push refspec",
   },
   { re: /git\s+filter-(branch|repo)\b/, why: "this rewrites history" },
 ];
@@ -138,14 +165,31 @@ for (const b of blocked) {
 }
 
 // ---------------------------------------------------------------------------
-// Remote targeting. Only meaningful once an origin exists: before that, setup is
-// still choosing one and there is nothing yet to protect.
+// Push rules, scoped to each push invocation's own arguments.
 // ---------------------------------------------------------------------------
-const touchesRemote =
-  /git\s+remote\s+(add|set-url)/.test(cmd) ||
-  (/git\s+push\b/.test(cmd) && /https?:\/\/|git@/.test(cmd));
+for (const seg of pushSegments) {
+  let m = seg.match(/(--force\b|--force-with-lease\b|(?<=\s)-f(?=\s|$))/);
+  if (m) {
+    deny(`matched '${m[0]}' in '${seg.trim()}', and a force-push rewrites published history`);
+  }
+  // Mirror, branch deletion, or a leading + on a refspec.
+  m = seg.match(/(--mirror\b|--delete\b|(?<=\s)-d(?=\s|$)|\s\+\S)/);
+  if (m) {
+    deny(`matched '${m[0].trim()}' in '${seg.trim()}', and this is a destructive push refspec`);
+  }
+}
 
-if (touchesRemote) {
+// ---------------------------------------------------------------------------
+// Remote targeting. Only meaningful once an origin exists: before that, setup is
+// still choosing one and there is nothing yet to protect. Only URLs inside a
+// `git remote add|set-url` or a `git push` segment count.
+// ---------------------------------------------------------------------------
+const targeting = [
+  ...remoteSegments,
+  ...pushSegments.filter((s) => /https?:\/\/|git@/.test(s)),
+];
+
+if (targeting.length) {
   const origin = configuredOrigin();
   if (!origin) process.exit(0); // no origin yet: this IS the setup step
 
@@ -168,7 +212,8 @@ if (touchesRemote) {
   // (`git remote add origin <their url>`) gets blocked for doing exactly the thing
   // setup exists to do.
   if (approved === "github.com/usamarq/wayfinder-forge") process.exit(0);
-  const foreign = (cmd.match(/(?:https?:\/\/|git@)[^\s'"]+/g) || [])
+  const foreign = targeting
+    .flatMap((seg) => seg.match(/(?:https?:\/\/|git@)[^\s'"]+/g) || [])
     .map(normalise)
     .filter((u) => u !== approved);
 
