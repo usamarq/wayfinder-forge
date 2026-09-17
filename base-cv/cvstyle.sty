@@ -9,6 +9,7 @@
 %    \cvcontact{\faIcon}{text}      one contact item; separate with \cvdot
 %    \cvdot                         the separator between contact items
 %    \cvsection{\faIcon}{TITLE}     section heading with an underline rule
+%                                   (never stranded at the foot of a page)
 %    \cvsubsection{Title}           bold subheading inside a section
 %    \cventry{left content}{date}   entry with a right-aligned date
 %    cvitems                        tight bullet list for entry details
@@ -22,7 +23,7 @@
 %  there too, or your master and your applications stop matching.
 % =====================================================================
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{cvstyle}[2026/08/04 Wayfinder Forge CV style]
+\ProvidesPackage{cvstyle}[2026/09/18 Wayfinder Forge CV style]
 
 \RequirePackage{xcolor}
 \RequirePackage{fontspec}
@@ -67,23 +68,39 @@
 \newcommand{\cvcontact}[2]{{\color{cvaccent}#1}~#2}
 \newcommand{\cvdot}{\quad}
 
+% ---- Keep a heading with what follows it -----------------------------
+% Break the page early if fewer than five lines remain, so a section
+% heading is never stranded at the foot of a page. Plain TeX on purpose:
+% no extra package to install.
+\newcommand{\cvkeepwithnext}{\par\ifdim\dimexpr\pagegoal-\pagetotal\relax<5\baselineskip\newpage\fi}
+
 % ---- Section heading -------------------------------------------------
 % \cvsection{\faIcon}{TITLE}
+% The rule is drawn with \hrule in vertical mode, not an inline \rule: an
+% inline rule sits on the baseline of a fresh text line, which puts it a
+% full line below the heading and crowds the body text.
 \newcommand{\cvsection}[2]{%
-  \vspace{8pt}%
+  \cvkeepwithnext\vspace{8pt}%
   {\cvdisplayfont\large\bfseries\color{cvaccent}#1~\MakeUppercase{#2}}\par
-  \vspace{2pt}{\color{cvaccent}\rule{\linewidth}{1pt}}\par\vspace{5pt}}
+  \nointerlineskip\vspace{2.5pt}%
+  {\color{cvaccent}\hrule height 1pt}%
+  \nointerlineskip\vspace{5pt}}
 
 % \cvsubsection{Title}
 \newcommand{\cvsubsection}[1]{\vspace{3pt}{\bfseries #1}\par\vspace{2pt}}
 
 % ---- Entry with a right-aligned date ---------------------------------
 % \cventry{left content}{date}
+% The leading \strut in each box, and \textcolor rather than a bare \color
+% switch, keep the two first baselines level: a colour whatsit at the top
+% of a [t] minipage lets the date drift below the title. The trailing
+% \strut gives the last line its full depth, so whatever follows the entry
+% keeps a normal line distance.
 \newcommand{\cventry}[2]{%
   \noindent
-  \begin{minipage}[t]{0.74\linewidth}\raggedright #1\end{minipage}%
+  \begin{minipage}[t]{0.74\linewidth}\raggedright\strut #1\strut\end{minipage}%
   \hfill
-  \begin{minipage}[t]{0.24\linewidth}\raggedleft\small\color{cvdate}#2\end{minipage}\par
+  \begin{minipage}[t]{0.24\linewidth}\raggedleft\small\strut\textcolor{cvdate}{#2}\end{minipage}\par
   \vspace{1pt}}
 
 % ---- Tight bullet list -----------------------------------------------

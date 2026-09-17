@@ -2,16 +2,24 @@
 %  templates/tailored-cv.tex : designed tailored-CV skeleton
 %
 %  Usage (tailor skill):
-%    1. Copy to applications/<company>-<role>/cv-<slug>.tex
+%    1. Copy to applications/<company>-<role>/<name>-cv-<company>.tex
+%       (<name> is the file-name slug in profile.md: every file an
+%       employer receives leads with the user's name, because a file
+%       called cv-acme.pdf says nothing about whose CV it is once it is
+%       in a recruiter's downloads folder).
 %    2. Replace every {{...}} placeholder. Content rules (CLAUDE.md):
 %       - every claim comes from MASTER_CV.md: reorder, select, rephrase,
-%         never invent; every number verbatim
+%         never invent; every number verbatim, durations included
 %       - no em dashes anywhere; date ranges use "--" (en dash)
 %       - escape LaTeX specials: \& \% \#
 %    3. Build with XeLaTeX (fontspec, NOT pdflatex), two passes:
-%         xelatex cv-<slug>.tex
+%         xelatex <name>-cv-<company>.tex
+%    4. Read the built PDF once as a page. A title colliding with its
+%       date, or a heading stranded at the foot of a page, never shows
+%       up in the log.
 %
-%  Target length: 1-2 pages. Cut projects before cutting experience.
+%  Target length: 1-2 pages, and two is the target for most people: length
+%  should track output. Cut projects before cutting experience.
 %  This file is a skeleton; it is not meant to compile until the
 %  placeholders are replaced.
 %
@@ -59,19 +67,35 @@
 \linespread{1.05}
 \setlength{\emergencystretch}{2em}
 
+% ---- Keep a heading with what follows it -----------------------------
+% Break the page early if fewer than five lines remain, so a section
+% heading is never stranded at the foot of a page. Plain TeX on purpose:
+% no extra package to install.
+\newcommand{\keepwithnext}{\par\ifdim\dimexpr\pagegoal-\pagetotal\relax<5\baselineskip\newpage\fi}
+
 % ---- Section heading -------------------------------------------------
+% The rule is drawn with \hrule in vertical mode, not an inline \rule: an
+% inline rule sits on the baseline of a fresh text line, which puts it a
+% full line below the heading and crowds the body text.
 \newcommand{\cvsection}[1]{%
-  \vspace{8pt}%
+  \keepwithnext\vspace{8pt}%
   {\displayfont\large\bfseries\color{accent}\MakeUppercase{#1}}\par
-  \vspace{2pt}{\color{accent}\rule{\linewidth}{1pt}}\par\vspace{5pt}}
+  \nointerlineskip\vspace{2.5pt}%
+  {\color{accent}\hrule height 1pt}%
+  \nointerlineskip\vspace{5pt}}
 
 % ---- Entry: bold title + right-aligned date, italic org line ---------
 % \cventry{Title}{Date}{Organisation}
+% The leading \strut in each box, and \textcolor rather than a bare \color
+% switch, keep the two first baselines level: a colour whatsit at the top
+% of a [t] minipage lets the date drift below the title. The trailing
+% \strut gives a wrapped title's last line its full depth, so the
+% organisation line below it keeps a normal line distance.
 \newcommand{\cventry}[3]{%
   \noindent
-  \begin{minipage}[t]{0.72\linewidth}\raggedright\textbf{#1}\end{minipage}%
+  \begin{minipage}[t]{0.72\linewidth}\raggedright\strut\textbf{#1}\strut\end{minipage}%
   \hfill
-  \begin{minipage}[t]{0.26\linewidth}\raggedleft\small\color{datecolor}#2\end{minipage}\par
+  \begin{minipage}[t]{0.26\linewidth}\raggedleft\small\strut\textcolor{datecolor}{#2}\end{minipage}\par
   {\itshape #3}\par\vspace{1pt}}
 
 % ---- Tight bullet list ----------------------------------------------
@@ -93,6 +117,8 @@
    \contact{\faMapMarker}{{{CITY, COUNTRY}}}}\\[3pt]
   {\small\contact{\faLinkedin}{\href{{{LINKEDIN URL}}}{{{linkedin display}}}}\quad
    \contact{\faGithub}{\href{{{GITHUB URL}}}{{{github display}}}}}
+  % If profile.md records a personal website, lead the second line with it:
+  %   \contact{\faGlobe}{\href{{{WEBSITE URL}}}{{{website display}}}}\quad
 \end{center}
 \vspace{3pt}
 
